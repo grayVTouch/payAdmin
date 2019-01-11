@@ -1,0 +1,248 @@
+body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.app {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.app .doc-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.app .doc-right {
+    margin-left: 200px;
+    height: 100%;
+}
+
+/**
+ * **************
+ * 文档左边：上
+ * **************
+ */
+.app .doc-left {
+    background-color: #464b56;
+}
+
+.app .doc-left .top {
+    height: 50px;
+    line-height: 50px;
+    background-color: #525865;
+}
+
+.app .doc-left .top .logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50px;
+    text-align: center;
+}
+
+.app .doc-left .top .logo .image {
+    width: 28px;
+    height: 28px;
+}
+
+.app .doc-left .top .text {
+    margin-left: 50px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/**
+ * **************
+ * 文档左边：中
+ * **************
+ */
+.app .doc-left .mid {
+
+}
+
+.app .doc-left .mid .avatar {
+    height: 150px;
+    position: relative;
+}
+
+.app .doc-left .mid .avatar .image-for-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 120px;
+    height: 120px;
+    transform: translate3d(-50% , -50% , 0);
+    border-radius: 120px;
+    overflow: hidden;
+}
+
+.app .doc-left .mid .avatar .image-for-container .image {
+    width: 100%;
+    min-height: 100%;
+    vertical-align: top;
+}
+
+.app .doc-left .mid .text {
+    font-size: 13px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.app .doc-left .btm {
+
+}
+
+/**
+ * ****************
+ * 文档右边：上
+ * ****************
+ */
+.app .doc-right > .top {
+    height: 50px;
+    background-color: #5c626d;
+}
+
+.app .doc-right > .top:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+.app .doc-right > .top > * {
+    height: 100%;
+}
+
+.app .doc-right > .top > .left {
+    float: left;
+}
+
+.app .doc-right > .top > .right {
+    float: right;
+}
+
+.app .doc-right > .top > .right .user {
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+}
+
+.app .doc-right > .top > .right .user:hover {
+    background-color: #797d84;
+}
+
+.app .doc-right > .top > .right .user .control {
+    /*padding: 0 20px;*/
+    height: 100%;
+    padding-right: 10px;
+}
+
+.app .doc-right > .top > .right .user .control > * {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+}
+
+.app .doc-right > .top > .right .user .control .c-left {
+    position: relative;
+    width: 50px;
+}
+
+.app .doc-right > .top > .right .user .control .c-left .image-for-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50% , -50% , 0);
+}
+
+.app .doc-right > .top > .right .user .control .c-left .image-for-container .image {
+    width: 100%;
+    min-height: 100%;
+    vertical-align: top;
+}
+
+.app .doc-right > .top > .right .user .function {
+    background-color: #484e58;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+}
+
+.app .doc-right > .top > .right .user .function .line {
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+.app .doc-right > .top > .right .user .function .line:hover {
+    background-color: #34383e;
+}
+
+.app .doc-right > .top > .right .user .function .line .ico {
+    width: 50px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.app .doc-right > .top > .right .user .function .line .ico .image {
+    width: 28px;
+    height: 28px;
+}
+
+.app .doc-right > .top > .right .user .function .line .text {
+    font-size: 12px;
+    margin-left: 50px;
+    width: 120px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/**
+ * ****************
+ * 文档右边：下
+ * ****************
+ */
+.app .doc-right > .btm {
+    background-color:#777d8a;
+
+}

@@ -1,0 +1,166 @@
+
+.app {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-image: url('/static/image/back.jpg');
+    background-size: 100% 100%;
+}
+
+.app .main {
+    width: 320px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: #282E36;
+    padding:40px;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    transform:translate3d(-50% , -50% , 0px);
+    -webkit-transform:translate3d(-50% , -50% , 0px);
+    -moz-transform:translate3d(-50% , -50% , 0px);
+    -ms-transform:translate3d(-50% , -50% , 0px);
+    -o-transform:translate3d(-50% , -50% , 0px);
+}
+
+
+.app .main .line {
+
+}
+
+/**
+ * **************************
+ * 用户头像
+ * **************************
+ */
+.app .main .top {
+
+}
+
+.app .main .header {
+    height: 120px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.app .main .header .avatar {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #C56A6B;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    border-radius: 120px;
+    transform: translateX(-50%);
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.app .main .header .avatar .image {
+    width: 100%;
+    min-height: 100%;
+}
+
+/**
+ * ********************
+ * 表单
+ * ********************
+ */
+.app .main .form {
+
+}
+
+.app .main .form .line {
+
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.app .main .form .line:nth-last-of-type(1) {
+    margin-bottom: 0;
+}
+
+.app .main .form .input-line .top {
+    background-color: #1E262E;
+    height: 50px;
+    line-height: 50px;
+}
+
+.app .main .form .input-line .top * {
+    height: 100%;
+}
+
+.app .main .form .input-line .top .c-input {
+    margin-right: 60px;
+}
+
+.app .main .form .input-line .top .c-input .input {
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: transparent;
+    border: none;
+    vertical-align: top;
+    transition: all 0.3s linear;
+}
+
+.app .main .form .input-line .top .c-input .input:focus {
+    background-color: #2a3541;
+}
+
+.app .main .form .line .c-ico {
+    width: 60px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.app .main .form .input-line .top .c-ico .image {
+    width: 25px;
+    height: 25px;
+}
+
+.app .main .form .input-line .btm {
+    transition: all 0.3s linear;
+    font-size: 14px;
+    line-height: 30px;
+    color: red;
+}
+
+.app .main .form .check-line {
+    height: 50px;
+    line-height: 50px;
+}
+
+.app .main .form .check-line > * {
+    height: 100%;
+}
+
+.app .main .form .check-line span {
+    font-size: 12px;
+    color: white;
+}
+
+.app .main .form .btn-line {
+    text-align: center;
+}
+
+/**
+ * ****************
+ * iview
+ * ****************
+ */
+
+.demo-spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+}
+
+@keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
+}

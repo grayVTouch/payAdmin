@@ -1,0 +1,9 @@
+/**
+ * *************
+ * iview 重置
+ * *************
+ */
+* {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+}
