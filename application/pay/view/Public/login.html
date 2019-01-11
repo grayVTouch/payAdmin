@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv='content-type' content='text/html;charset=utf8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge,Chrome=1'>
+    <meta name='form-detection' content='telephone=no'>
+    <meta name='renderer' content='webkit'>
+
+    {block name='meta'}{/block}
+
+    <!--<link rel='shortcut icon' href='{$url}/logo/logo.ico' />-->
+    <link rel="stylesheet" href="{$plugin_url}/css/base.css?version={$version}">
+    <link rel="stylesheet" href="{$plugin_url}/css/ui/ui.css?version={$version}">
+    <link rel="stylesheet" href="{$plugin_url}/iview/styles/iview.css?version={$version}">
+    <link rel="stylesheet" href="{$pub_url}/css/iviewReset.css?version={$version}">
+
+    {block name='link'}{/block}
+
+    <title>{block name='title'}{/block}</title>
+</head>
+<body>
+
+{block name='app'}{/block}
+
+<script src="{$plugin_url}/Vue/vue.js?version={$version}"></script>
+<script src="{$plugin_url}/JQuery/jquery-3.3.1.js?version={$version}"></script>
+<script src="{$plugin_url}/layer-v3.1.1/layer/layer.js?version={$version}"></script>
+<script src="{$plugin_url}/iview/iview.js"></script>
+<script src="{$pub_url}/js/tool.js"></script>
+<script src="{$pub_url}/js/currency.js"></script>
+<script src="{$pub_url}/js/login.js"></script>
+
+
+{block name='script'}{/block}
+</body>
+</html>

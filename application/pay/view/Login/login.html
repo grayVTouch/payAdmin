@@ -1,0 +1,64 @@
+{extend name='Public::login'}
+{block name='title'}用户登录{/block}
+
+{block name='link'}
+<link rel="stylesheet" href="{$pub_url}/css/login.css">
+{/block}
+
+{block name='app'}
+<div class="app" id="app">
+    <div class="main">
+        <div class="top header">
+            <div class="avatar">
+                <img src="/static/image/lovely.jpg" class="image">
+            </div>
+        </div>
+        <form class="btm form layui-form" @submit="submit">
+            <div class="line input-line">
+                <div class="top">
+                    <div class="c-input">
+                        <input type="text" placeholder="请输入用户名" v-model="form.name" class="input">
+                    </div>
+                    <div class="c-ico">
+                        <img src="{$act_url}/image/user.png" class="image">
+                    </div>
+                </div>
+                <div class="btm tip">{{ tip.name }}</div>
+            </div>
+
+            <div class="line input-line">
+                <div class="top">
+                    <div class="c-input">
+                        <input type="password" placeholder="请输入密码" v-model="form.password" class="input">
+                    </div>
+                    <div class="c-ico">
+                        <img src="{$act_url}/image/password.png" class="image">
+                    </div>
+                </div>
+                <div class="btm tip">{{ tip.password }}</div>
+            </div>
+
+            <div class="line check-line">
+                <div class="left">
+                    <span>记住密码：</span>
+                    <!--<input type="checkbox" lay-skin="switch" v-model="form.remember"  lay-text="ON|OFF">-->
+                    <i-switch size="large" v-model="remember">
+                        <span slot="open">开启</span>
+                        <span slot="close">关闭</span>
+                    </i-switch>
+                </div>
+                <div class="right"></div>
+            </div>
+
+            <div class="line btn-line">
+                <button type="submit" class="btn-2">登录</button>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+
+{block name='script'}
+<script src="{$act_url}/js/login.js"></script>
+{/block}
+

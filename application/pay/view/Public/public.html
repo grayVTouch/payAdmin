@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv='content-type' content='text/html;charset=utf8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge,Chrome=1'>
+    <meta name='form-detection' content='telephone=no'>
+    <meta name='renderer' content='webkit'>
+
+    {block name='meta'}{/block}
+
+    <!--<link rel='shortcut icon' href='{$url}/logo/logo.ico' />-->
+    <link rel="stylesheet" href="{$plugin_url}/css/base.css?version={$version}">
+    <link rel="stylesheet" href="{$plugin_url}/css/ui/ui.css?version={$version}">
+    <link rel="stylesheet" href="{$plugin_url}/iview/styles/iview.css?version={$version}">
+    <link rel="stylesheet" href="{$pub_url}/css/iviewReset.css?version={$version}">
+    <link rel="stylesheet" href="{$pub_url}/css/public.css?version={$version}">
+
+    {block name='link'}{/block}
+
+    <title>{block name='title'}{/block}</title>
+</head>
+<body>
+
+<div class="app">
+    <div class="doc-left" id="doc-left">
+        <div class="top">
+            <div class="logo"><img src="{$res_url}/image/lovely.jpg" class="image"></div>
+            <div class="text">支付系统</div>
+        </div>
+        <div class="mid">
+            <div class="avatar">
+                <div class="image-for-container"><img src="{$res_url}/image/lovely.jpg" class="image"></div>
+            </div>
+            <div class="text">{$user->phone}</div>
+        </div>
+        <div class="btm">
+            <i-menu theme="dark" mode="vertical" width="200">
+                <submenu name="1">
+                    <template slot="title">
+                        <icon type="ios-paper"></icon>内容管理
+                    </template>
+                    <menu-item name="1-1">文章管理</menu-item>
+                    <menu-item name="1-2">文章管理</menu-item>
+                    <menu-item name="1-3">文章管理</menu-item>
+                </submenu>
+            </i-menu>
+        </div>
+        <div class="fixed"></div>
+    </div>
+    <div class="doc-right" id="doc-right">
+        <div class="top" ref="pub-top">
+            <div class="left"></div>
+            <div class="right">
+                <!-- 用户控制 -->
+                <div class="user" @mouseenter="mouseEnterForUser" @mouseleave="mouseLeaveForUser">
+                    <div class="control">
+                        <div class="c-left">
+                            <div class="image-for-container">
+                                <img src="{$res_url}/image/lovely.jpg" class="image">
+                            </div>
+                        </div>
+                        <div class="c-right text">月舒</div>
+                    </div>
+                    <div class="function hide" ref="pub-function">
+                        <div class="line">
+                            <div class="ico"><img src="{$pub_url}/image/power.png" class="image"></div>
+                            <div class="text">占位功能</div>
+                        </div>
+                        <div class="line" @click="loginOut">
+                            <div class="ico"><img src="{$pub_url}/image/power.png" class="image"></div>
+                            <div class="text">注销</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="btm" ref="pub-btm"></div>
+    </div>
+</div>
+
+<script src="{$plugin_url}/Vue/vue.js?version={$version}"></script>
+<script src="{$plugin_url}/JQuery/jquery-3.3.1.js?version={$version}"></script>
+<script src="{$plugin_url}/layer-v3.1.1/layer/layer.js?version={$version}"></script>
+<script src="{$plugin_url}/iview/iview.js"></script>
+<script src="{$pub_url}/js/tool.js"></script>
+<script src="{$pub_url}/js/currency.js"></script>
+<script src="{$pub_url}/js/globalVar.js"></script>
+<script src="{$pub_url}/js/public.js"></script>
+<script src="{$pub_url}/js/docLeft.js"></script>
+<script src="{$pub_url}/js/docRight.js"></script>
+
+{block name='script'}{/block}
+</body>
+</html>
