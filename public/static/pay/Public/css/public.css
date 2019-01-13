@@ -12,13 +12,13 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    color: white;
 }
 
 .app .doc-left {
     position: fixed;
     left: 0;
     top: 0;
+    color: white;
     z-index: 2;
     width: 200px;
     height: 100%;
@@ -29,6 +29,8 @@ body {
 .app .doc-right {
     margin-left: 200px;
     height: 100%;
+    /*min-width: 1080px;*/
+    overflow:auto;
 }
 
 /**
@@ -121,6 +123,7 @@ body {
     height: 50px;
     background-color: #5c626d;
     z-index: 1;
+    color: white;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
@@ -270,6 +273,7 @@ body {
     height: 60px;
     line-height: 60px;
     overflow: hidden;
+    color: white;
 }
 
 .app .doc-right > .btm > .nav:after {
@@ -305,7 +309,8 @@ body {
 
 }
 
-.con {
+.app .doc-right > .btm > .con {
     min-height: 300px;
+    padding: 20px;
     background-color: white;
 }

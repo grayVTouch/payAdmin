@@ -9,6 +9,7 @@
 namespace app\pay\controller;
 
 use app\pay\util\Misc;
+use app\pay\model\Role as MRole;
 
 class Role extends Controller
 {
@@ -22,6 +23,9 @@ class Role extends Controller
     // 角色列表
     public function listView()
     {
-        return $this->fetch('list');
+        $res = MRole::paginate();
+        return $this->fetch('list' , [
+            'res' => $res
+        ]);
     }
 }

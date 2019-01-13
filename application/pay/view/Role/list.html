@@ -1,12 +1,55 @@
 {extend name='Public::public' /}
 
 {block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
+<link rel="stylesheet" href="{$plugin_url}/css/form/filter.css?version={$version}">
+<link rel="stylesheet" href="{$pub_url}/css/list.css?version={$version}">
 <link rel="stylesheet" href="{$act_url}/css/list.css?version={$version}">
 {/block}
 
-{block name='title'}支付系统{/block}
-
 {block name='con'}
+<div class="list">
+    <div class="component-title">
+        <div class="left">数据列表</div>
+        <div class="right">
+            <a>添加</a>
+        </div>
+    </div>
+    <table class="line-tb">
+        <thead>
+        <tr>
+            <th class="th-cbox"><Checkbox @click="selectAll"></Checkbox></th>
+            <th class="th-id">id</th>
+            <th class="th-name">名称</th>
+            <th class="th-number">权重</th>
+            <th class="th-time">创建时间</th>
+            <th class="th-opr">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $res as $v}
+        <tr>
+            <td><Checkbox true-value="{$v->id}|true" :value="test['cbox_{$v->id}']" false-value="{$v->id}|false" @on-change="select"></Checkbox></td>
+            <td>{$v.id}</td>
+            <td>{$v.name}</td>
+            <td>{$v.weight}</td>
+            <td>{$v.create_time}</td>
+            <td>
+                <button type="button" class="btn-1" data-id="{$v.id}" @click="del">编辑</button>
+                <button type="button" class="btn-1" data-id='{$v.id}' @click="del">删除</button>
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+</div>
+<div class="function">
+    <span class="text">全局操作：</span>
+    <button type="button" class="btn-1">删除选中项</button>
+</div>
+<div class="page">
+    <Page :total="{$res->total()}" size="small" show-elevator show-total />
+</div>
 {/block}
 
 {block name='script'}
