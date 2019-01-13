@@ -8,15 +8,25 @@
 
 namespace app\pay\Controller;
 
+use app\common\lib\Category;
+use Exception;
 use think\Controller as BaseController;
-
+use app\pay\util\Misc;
 use think\facade\View;
 use app\pay\middleware\UserAuth;
+use app\pay\middleware\PermAuth;
+use app\pay\model\Route;
 
 class Controller extends BaseController
 {
     protected $middleware = [
         UserAuth::class ,
+        PermAuth::class
+    ];
+
+    // 排除的路由
+    private $exclude = [
+        '*Login*'
     ];
 
     public function __construct()
@@ -24,20 +34,27 @@ class Controller extends BaseController
         parent::__construct();
 
         // 这边做一些简单的事情 ...
+    }
 
+    // 渲染视图（渲染视图前做些什么）
+    protected function fetch($template = '' , $vars = [] , $config = [])
+    {
         // 公共视图变量
-        $this->shareVars();
+        $this->shareVar();
+        // 获取当前位置（需要排除的请在$exclude中指明）
+        $this->pos();
+        return parent::fetch($template , $vars , $config);
     }
 
     // 增加公共变量
-    private function shareVars()
+    private function shareVar()
     {
         $url = config('app.url');
-        $mvc = mvc();
+        $mvc = Misc::mvc();
         $plugin_url = sprintf('%s/plugin' , $url);
         $res_url = sprintf('%s/static' , $url);
-        $pub_url = sprintf('%s/static/%s/Public' , $url , $mvc['module']);
-        $act_url = sprintf('%s/static/%s/%s' , $url , $mvc['module'] , $mvc['controller']);
+        $pub_url = sprintf('%s/static/%s/Public' , $url , $mvc->module);
+        $act_url = sprintf('%s/static/%s/%s' , $url , $mvc->module , $mvc->controller);
 
         // 视图共享变量
         View::share([
@@ -54,7 +71,42 @@ class Controller extends BaseController
             // 当前方法视图 url
             'act_url'   => $act_url ,
             // 当前登录用户信息
-            'user'      => user()
+            'user'      => Misc::user()
+        ]);
+    }
+
+    // 当前位置（面包屑）
+    private function pos()
+    {
+        $mvc = Misc::mvc();
+        foreach ($this->exclude as $v)
+        {
+            $reg = Misc::genReg($v);
+            if (preg_match($reg , $mvc->path)) {
+                return ;
+            }
+        }
+        // 找到当前路由
+        $route = Route::where([
+            ['module' , '=' , $mvc->module] ,
+            ['controller' , '=' , $mvc->controller] ,
+            ['action' , '=' , $mvc->action]
+        ])->find();
+        if (is_null($route)) {
+            throw new Exception('未找到当前路径对应路由：' . $mvc->path);
+        }
+        $routes = Misc::route()->toArray();
+        $pos = Category::parents($route->id , $routes , [
+            'id' => 'id' ,
+            'pid' => 'p_id'
+        ] , true , false);
+        // 赋值到模板
+        View::share([
+            'pos' => [
+                'all' => $pos ,
+                'top' => $pos[0] ,
+                'cur' => $pos[1]
+            ]
         ]);
     }
 }

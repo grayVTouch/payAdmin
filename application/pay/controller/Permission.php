@@ -9,10 +9,14 @@
 namespace app\pay\controller;
 
 
+
 class Permission extends Controller
 {
+    // 无权限
     public function denyView()
     {
         return view('deny.html');
     }
+
+
 }

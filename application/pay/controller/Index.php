@@ -13,6 +13,6 @@ class Index extends Controller
 {
     public function indexView()
     {
-        return view('index');
+        return $this->fetch('index');
     }
 }

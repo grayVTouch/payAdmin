@@ -8,9 +8,10 @@
 
     {block name='meta'}{/block}
 
-    <!--<link rel='shortcut icon' href='{$url}/logo/logo.ico' />-->
+    <link rel='shortcut icon' href='{$res_url}/image/logo.png' />
     <link rel="stylesheet" href="{$plugin_url}/css/base.css?version={$version}">
     <link rel="stylesheet" href="{$plugin_url}/css/ui/ui.css?version={$version}">
+    <link rel="stylesheet" href="{$plugin_url}/_Loading/css/Loading.css?version={$version}">
     <link rel="stylesheet" href="{$plugin_url}/iview/styles/iview.css?version={$version}">
     <link rel="stylesheet" href="{$pub_url}/css/iviewReset.css?version={$version}">
 
@@ -22,12 +23,24 @@
 
 {block name='app'}{/block}
 
+<!-- 加载层 -->
+<div class="loading-container hide" id="pub-load-container">
+    <div class="background"></div>
+    <div class="loader loader-1">
+        <div class="loader-outter"></div>
+        <div class="loader-inner"></div>
+    </div>
+</div>
+
+<script src="{$plugin_url}/SmallJs/SmallJs.js?version={$version}"></script>
+<script src="{$plugin_url}/_Loading/js/Loading.js?version={$version}"></script>
 <script src="{$plugin_url}/Vue/vue.js?version={$version}"></script>
 <script src="{$plugin_url}/JQuery/jquery-3.3.1.js?version={$version}"></script>
 <script src="{$plugin_url}/layer-v3.1.1/layer/layer.js?version={$version}"></script>
 <script src="{$plugin_url}/iview/iview.js"></script>
 <script src="{$pub_url}/js/tool.js"></script>
 <script src="{$pub_url}/js/currency.js"></script>
+<script src="{$pub_url}/js/globalVar.js"></script>
 <script src="{$pub_url}/js/login.js"></script>
 
 

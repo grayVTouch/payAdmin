@@ -17,7 +17,7 @@
             <div class="line input-line">
                 <div class="top">
                     <div class="c-input">
-                        <input type="text" placeholder="请输入用户名" v-model="form.name" class="input">
+                        <input type="text" placeholder="请输入用户名" v-model="form.name" @input="tip.name=''" class="input">
                     </div>
                     <div class="c-ico">
                         <img src="{$act_url}/image/user.png" class="image">
@@ -29,7 +29,7 @@
             <div class="line input-line">
                 <div class="top">
                     <div class="c-input">
-                        <input type="password" placeholder="请输入密码" v-model="form.password" class="input">
+                        <input type="password" placeholder="请输入密码" v-model="form.password" @input="tip.password=''" class="input">
                     </div>
                     <div class="c-ico">
                         <img src="{$act_url}/image/password.png" class="image">

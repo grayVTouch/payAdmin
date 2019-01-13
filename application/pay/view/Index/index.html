@@ -1,1 +1,18 @@
 {extend name='Public::public' /}
+
+{block name='link'}
+<link rel="stylesheet" href="{$act_url}/css/index.css?version={$version}">
+{/block}
+
+{block name='title'}支付系统{/block}
+
+{block name='con'}
+<div class="one"></div>
+<div class="one"></div>
+<div class="one"></div>
+<div class="one"></div>
+{/block}
+
+{block name='script'}
+<script src="{$act_url}/js/index.js?version={$version}"></script>
+{/block}

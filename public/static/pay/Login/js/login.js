@@ -14,14 +14,12 @@
                 name: '' ,
                 password: ''
             } ,
-            isRunning: false ,
         } ,
         created () {
 
         } ,
         mounted () {
-            // 定义表单
-            // layui.define('form' , () => layui.form);
+
         } ,
 
         methods: {
@@ -33,26 +31,20 @@
             } ,
             submit (e) {
                 e.preventDefault();
-                if (this.isRunning) {
-                    layer.alert('请求中...，请耐心等待');
-                    return ;
-                }
                 let res = this.check();
                 if (!res.status) {
                     layer.alert(res.msg);
                     return ;
                 }
-                this.isRunning = true;
                 // 显示加载信息
-                layer.load();
+                topContext.ins.load.show();
                 let self = this;
                 $.ajax({
                     url: genUrl('Login' , 'login') ,
                     method: 'post' ,
                     data: this.form ,
                     success (data) {
-                        self.isRunning = false;
-                        layer.closeAll();
+                        topContext.ins.load.hide();
                         if (data.code == '002') {
                             layer.alert(data.msg);
                             return ;

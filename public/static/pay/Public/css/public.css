@@ -16,9 +16,10 @@ body {
 }
 
 .app .doc-left {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
+    z-index: 2;
     width: 200px;
     height: 100%;
     box-sizing: border-box;
@@ -112,8 +113,16 @@ body {
  * ****************
  */
 .app .doc-right > .top {
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding-left: 200px;
+    width: 100%;
     height: 50px;
     background-color: #5c626d;
+    z-index: 1;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .app .doc-right > .top:after {
@@ -243,6 +252,60 @@ body {
  * ****************
  */
 .app .doc-right > .btm {
+    padding: 0 20px;
+    padding-top: 50px;
+    min-height: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     background-color:#777d8a;
 
+}
+
+/**
+ * ***************
+ * 功能栏
+ * ***************
+ */
+.app .doc-right > .btm > .nav {
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+}
+
+.app .doc-right > .btm > .nav:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+.app .doc-right > .btm > .nav > * {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.app .doc-right > .btm > .nav > .left {
+    float: left;
+}
+
+.app .doc-right > .btm > .nav > .right {
+    float: right;
+}
+
+.app .doc-right > .btm > .nav > .left .image {
+    width: 40px;
+    height: 40px;
+}
+
+.app .doc-right > .btm > .nav > .left .text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.app .doc-right > .btm > .nav > .left .name {
+
+}
+
+.con {
+    min-height: 300px;
+    background-color: white;
 }
