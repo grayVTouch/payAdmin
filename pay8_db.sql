@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : zmzc_test
+ Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50641
- Source Host           : 106.15.196.35:3306
+ Source Server Version : 80012
+ Source Host           : localhost:3306
  Source Schema         : pay8_db
 
  Target Server Type    : MySQL
- Target Server Version : 50641
+ Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 11/01/2019 17:31:06
+ Date: 13/01/2019 18:52:29
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `cl_bank_info`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`uid`) USING BTREE,
   INDEX `cardindex`(`card_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 219138 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'bankBranch_Name' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 219137 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'bankBranch_Name' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_bank_info
@@ -159,7 +159,7 @@ CREATE TABLE `cl_menu`  (
   `p_id` int(11) NULL DEFAULT 0,
   `sort` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_menu
@@ -183,20 +183,73 @@ INSERT INTO `cl_menu` VALUES (13, '', '提现管理', 3, NULL);
 -- ----------------------------
 DROP TABLE IF EXISTS `cl_role`;
 CREATE TABLE `cl_role`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_code` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '角色代码',
-  `role_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '角色名',
-  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '角色名称',
+  `code` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '角色代码',
+  `weight` int(11) NULL DEFAULT 0 COMMENT '权重',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色表 by cxl' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cl_role
 -- ----------------------------
-INSERT INTO `cl_role` VALUES (1, '100', '管理员', '2019-01-09 21:06:50', NULL);
-INSERT INTO `cl_role` VALUES (2, '110', '代理', '2019-01-09 21:07:04', NULL);
-INSERT INTO `cl_role` VALUES (3, '120', '商户', '2019-01-09 21:07:38', '');
+INSERT INTO `cl_role` VALUES (1, '管理员', '100', 0, '2019-01-13 10:37:38');
+INSERT INTO `cl_role` VALUES (2, '代理', '110', 0, '2019-01-13 10:37:38');
+INSERT INTO `cl_role` VALUES (3, '商户', '120', 0, '2019-01-13 10:37:38');
+
+-- ----------------------------
+-- Table structure for cl_role_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `cl_role_permission`;
+CREATE TABLE `cl_role_permission`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NULL DEFAULT NULL COMMENT 'cl_role.id',
+  `route_id` int(11) NULL DEFAULT NULL COMMENT 'cl_route.id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色权限表 by cxl' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of cl_role_permission
+-- ----------------------------
+INSERT INTO `cl_role_permission` VALUES (1, 1, 1);
+INSERT INTO `cl_role_permission` VALUES (2, 1, 2);
+INSERT INTO `cl_role_permission` VALUES (3, 1, 3);
+INSERT INTO `cl_role_permission` VALUES (4, 1, 4);
+INSERT INTO `cl_role_permission` VALUES (5, 1, 5);
+INSERT INTO `cl_role_permission` VALUES (6, 1, 6);
+
+-- ----------------------------
+-- Table structure for cl_route
+-- ----------------------------
+DROP TABLE IF EXISTS `cl_route`;
+CREATE TABLE `cl_route`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '名称（中文）',
+  `en` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '英文名称',
+  `module` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '模块',
+  `controller` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '控制器',
+  `action` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '动作',
+  `is_menu` enum('y','n') CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT 'n' COMMENT '是否菜单项：y-是 n-否',
+  `enable` enum('y','n') CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT 'y' COMMENT '仅对菜单项有效，是否启用：y-启用 n-禁用',
+  `ico_for_font` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '图标字体名称，仅针对iview 框架做的特殊处理',
+  `ico_for_small` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '小图标，图片链接地址',
+  `ico_for_big` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '大图标，图片链接地址',
+  `weight` int(11) NULL DEFAULT 0 COMMENT '权重',
+  `p_id` int(11) NULL DEFAULT 0 COMMENT 'cl_route.id',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '路由表 by cxl' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of cl_route
+-- ----------------------------
+INSERT INTO `cl_route` VALUES (1, '用户管理', 'User Manager', NULL, NULL, NULL, 'y', 'y', 'ios-paper', NULL, NULL, 0, 0, '2019-01-13 10:37:38');
+INSERT INTO `cl_route` VALUES (2, '用户列表', NULL, 'pay', 'User', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 1, '2019-01-13 10:37:38');
+INSERT INTO `cl_route` VALUES (3, '权限管理', 'Permission Manager', NULL, NULL, NULL, 'y', 'y', 'ios-lock', NULL, NULL, 0, 0, '2019-01-13 10:37:38');
+INSERT INTO `cl_route` VALUES (4, '角色列表', NULL, 'pay', 'Role', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-13 10:37:38');
+INSERT INTO `cl_route` VALUES (5, '路由列表', NULL, 'pay', 'Route', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-13 10:37:38');
+INSERT INTO `cl_route` VALUES (6, '角色权限', NULL, 'pay', 'Role', 'perm', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-13 10:37:38');
 
 -- ----------------------------
 -- Table structure for cl_test
@@ -240,13 +293,15 @@ CREATE TABLE `cl_user`  (
   `pro_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '邀请码',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_login` int(11) NULL DEFAULT 0 COMMENT '最后登录时间',
+  `is_root` enum('y','n') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'n' COMMENT '是否超级管理员：y-是 n-否',
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 361240832 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 361240833 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_user
 -- ----------------------------
-INSERT INTO `cl_user` VALUES (361240796, '15806020008', '', '', '中年', '李俊峰', 2, '350321198506101517', 0, '0000-00-00 00:00:00', 3, '2,3,361240796', 0, 1, NULL, '5474c1c732265', 100000, 6, 7.44, 7.44, 'a72cc9ced95adcye', NULL, 1545904848);
+INSERT INTO `cl_user` VALUES (361240796, '15806020008', '', '', '中年', '李俊峰', 2, '350321198506101517', 0, '0000-00-00 00:00:00', 3, '2,3,361240796', 0, 1, NULL, '5474c1c732265', 100000, 6, 7.44, 7.44, 'a72cc9ced95adcye', NULL, 1545904848, 'n');
+INSERT INTO `cl_user` VALUES (361240832, '13375086826', '$2y$10$UGZzIgltCpr1QuodPd7q6u/qWz8smyq1RJD78hpjVs/gXaoDtZx8y', '', '', '', 0, '', 0, '2019-01-12 10:25:05', 0, '', 0, 1, 0, '', 0, 1, 0.00, 0.00, '', NULL, 0, 'y');
 
 -- ----------------------------
 -- Table structure for cl_user_income
@@ -263,7 +318,7 @@ CREATE TABLE `cl_user_income`  (
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `object_id` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 75 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_user_income
@@ -344,6 +399,17 @@ INSERT INTO `cl_user_income` VALUES (73, 3, 361240796, 131.97, 0.07, 1, 15470007
 INSERT INTO `cl_user_income` VALUES (74, 2, 361240796, 131.97, 0.04, 1, 1547000719, '2019-01-09 10:25:19', 533);
 
 -- ----------------------------
+-- Table structure for cl_user_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `cl_user_permission`;
+CREATE TABLE `cl_user_permission`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NULL DEFAULT NULL COMMENT 'cl_role.id',
+  `route_id` int(11) NULL DEFAULT NULL COMMENT 'cl_route.id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色权限表 by cxl' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for cl_user_recharge
 -- ----------------------------
 DROP TABLE IF EXISTS `cl_user_recharge`;
@@ -359,7 +425,7 @@ CREATE TABLE `cl_user_recharge`  (
   `status` tinyint(4) NULL DEFAULT 0 COMMENT '0:提交；1支付完成；',
   `isdelete` tinyint(4) NULL DEFAULT 0 COMMENT '0:正常；1：删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_user_recharge
@@ -3724,7 +3790,7 @@ CREATE TABLE `cl_user_withdraw`  (
   `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '说明文字，审核时写备注用',
   `update_time` int(11) NULL DEFAULT 0 COMMENT '最后修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
@@ -3732,7 +3798,7 @@ CREATE TABLE `cl_user_withdraw`  (
 DROP TABLE IF EXISTS `hibernate_sequence`;
 CREATE TABLE `hibernate_sequence`  (
   `next_val` bigint(20) NULL DEFAULT NULL
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of hibernate_sequence
