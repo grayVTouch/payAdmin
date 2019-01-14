@@ -1,0 +1,16 @@
+/**
+ * *********************
+ * 完整的页面结构
+ * *********************
+ */
+.app .doc-right > .btm > .con > * {
+    margin-bottom: 20px;
+}
+
+.app .doc-right > .btm > .con > *:nth-last-of-type(1) {
+    margin-bottom: 0;
+}
+
+.app .doc-right > .btm > .con .page {
+    text-align: center;
+}
