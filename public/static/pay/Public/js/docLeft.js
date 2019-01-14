@@ -15,14 +15,8 @@
             }
         } ,
         created () {
-            $.post(genUrl('Role' , 'perms') , (data) => {
-                if (data.code != '000') {
-                    layer.msg(data.msg);
-                    return ;
-                }
-                this.menu = data.data;
-                this.initMenu();
-            });
+            // 获取功能
+            this.getMenu();
         } ,
 
         mounted () {
@@ -30,6 +24,29 @@
         } ,
 
         methods: {
+            // 获取菜单
+            getMenu () {
+                $.post(genUrl('Role' , 'perms') , (data) => {
+                    if (data.code != '000') {
+                        layer.msg(data.msg);
+                        return ;
+                    }
+                    this.menu = data.data;
+                    this.getPos();
+                });
+            } ,
+
+            // 获取当前位置
+            getPos () {
+                $.post(genUrl('Misc' , 'pos') , (data) => {
+                    if (data.code != '000') {
+                        layer.msg(data.msg);
+                        return ;
+                    }
+                    this.$store.state.pos = data.data;
+                    this.initMenu();
+                });
+            } ,
             linkTo (id) {
                 let route = this.findRoute('id' , id , this.menu);
                 if (route.link == '') {
@@ -37,21 +54,17 @@
                 }
                 window.location.href = route.link;
             } ,
+
             // 初始化菜单
             initMenu () {
-                // 页面解析
-                let path = window.location.pathname;
-                let route = this.findRoute('link' , path , this.menu);
-                if (route === false) {
-                    throw new Error('未找到当前路径对应的路由：' + path);
-                }
-                this.openName = [route.p_id];
-                this.activeName = route.id;
+                this.openName = [this.$store.state.pos.top.id];
+                this.activeName = this.$store.state.pos.sec.id;
                 this.$nextTick(() => {
                     this.$refs.menu.updateOpened();
                     this.$refs.menu.updateActiveName();
                 })
             } ,
+
             // 找到路由
             findRoute (key , value , list) {
                 if (this.val.countForRoute++ > 100) {

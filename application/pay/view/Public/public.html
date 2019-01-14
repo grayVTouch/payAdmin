@@ -35,7 +35,6 @@
             <div class="text">{$user->phone}</div>
         </div>
         <div class="btm">
-
             <i-menu theme="dark" ref="menu" :accordion="true" mode="vertical" width="200" @on-select="linkTo" :active-name="activeName" :open-names="openName">
                 <submenu v-for="v in menu" :key="v.id" :name="v.id">
                     <template slot="title">
@@ -44,7 +43,6 @@
                     <menu-item v-for="v1 in v.children" :name="v1.id" :key="v1.id">{{ v1.name }}</menu-item>
                 </submenu>
             </i-menu>
-
         </div>
         <div class="fixed"></div>
     </div>
@@ -73,21 +71,18 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="btm" ref="container" id='pub-btm'>
             <div class="nav">
                 <div class="left">
                     <img src="{$res_url}/image/user.jpg" class="image">
-                    <span class="text name">{$pos['top']['name']}</span><span class="text">&nbsp;/&nbsp;</span><span class="text en">{$pos['top']['en']}</span>
+                    <span class="text name">{{ $store.state.pos.top.name }}</span><span class="text">&nbsp;/&nbsp;</span><span class="text en">{{ $store.state.pos.top.en }}</span>
                 </div>
                 <div class="right">
-                    <Breadcrumb>
-                        {foreach $pos['all'] as $v}
-                        <breadcrumb-item to="{$v['link']}">{$v.name}</breadcrumb-item>
-                        {/foreach}
-                    </Breadcrumb>
+                    <breadcrumb>
+                        <breadcrumb-item v-for="v in $store.state.pos.all" :key="v.id">{{ v.name }}</breadcrumb-item>
+                    </breadcrumb>
                 </div>
             </div>
             <div class="con">
@@ -111,6 +106,7 @@
 <script src="{$plugin_url}/_Loading/js/Loading.js?version={$version}"></script>
 
 <script src="{$plugin_url}/Vue/vue.js?version={$version}"></script>
+<script src="{$plugin_url}/Vue/vuex.js?version={$version}"></script>
 <script src="{$plugin_url}/JQuery/jquery-3.3.1.js?version={$version}"></script>
 <script src="{$plugin_url}/layer-v3.1.1/layer/layer.js?version={$version}"></script>
 <script src="{$plugin_url}/iview/iview.js?version={$version}"></script>

@@ -41,13 +41,15 @@ insert into `cl_role` (name , code) values
 ('商户' , 120);
 
 insert into `cl_route` (name , en , module , controller , action , is_menu , ico_for_font , p_id) values
-('控制面板' , 'Control Pannel' , null , null , null , 'y' , 'ios-paper' , 0) ,
 ('用户管理' , 'User Manager' , null , null , null , 'y' , 'ios-paper' , 0) ,
 ('用户列表' , null , 'pay' , 'User' , 'listView' , 'y' , 'ios-paper' , 1) ,
 ('权限管理' , 'Permission Manager' , null , null , null , 'y' , 'ios-lock' , 0) ,
 ('角色列表' , null , 'pay' , 'Role' , 'listView' , 'y' , 'ios-paper' , 3) ,
 ('路由列表' , null , 'pay' , 'Route' , 'listView' , 'y' , 'ios-paper' , 3) ,
-('角色权限' , null , 'pay' , 'Role' , 'perm' , 'y' , 'ios-paper' , 3);
+('角色权限' , null , 'pay' , 'Role' , 'perm' , 'y' , 'ios-paper' , 3) ,
+('编辑角色' , null , 'pay' , 'Role' , 'editView' , 'n' , '' , 4) ,
+('添加角色' , null , 'pay' , 'Role' , 'addView' , 'n' , '' , 4) ,
+('删除角色' , null , 'pay' , 'Role' , 'del' , 'n' , '' , 4);
 
 insert into `cl_role_permission` (role_id , route_id) values
 (1 , 1) ,

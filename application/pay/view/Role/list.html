@@ -18,7 +18,7 @@
     <table class="line-tb">
         <thead>
         <tr>
-            <th class="th-cbox"><Checkbox @click="selectAll"></Checkbox></th>
+            <th class="th-cbox"><input type="checkbox" @click="selectedAllEvent"></th>
             <th class="th-id">id</th>
             <th class="th-name">名称</th>
             <th class="th-number">权重</th>
@@ -26,29 +26,27 @@
             <th class="th-opr">操作</th>
         </tr>
         </thead>
-        <tbody>
-        {foreach $res as $v}
-        <tr>
-            <td><Checkbox true-value="{$v->id}|true" :value="test['cbox_{$v->id}']" false-value="{$v->id}|false" @on-change="select"></Checkbox></td>
-            <td>{$v.id}</td>
-            <td>{$v.name}</td>
-            <td>{$v.weight}</td>
-            <td>{$v.create_time}</td>
+        <tbody ref="tbody">
+        <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
+            <td><input type="checkbox" class="c-box"></td>
+            <td>{{ v.id }}</td>
+            <td>{{ v.name }}</td>
+            <td>{{ v.weight }}</td>
+            <td>{{ v.create_time }}</td>
             <td>
-                <button type="button" class="btn-1" data-id="{$v.id}" @click="del">编辑</button>
-                <button type="button" class="btn-1" data-id='{$v.id}' @click="del">删除</button>
+                <a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id})">编辑</a>
+                <button type="button" class="btn-1" @click="delEvent(v.id)">删除</button>
             </td>
         </tr>
-        {/foreach}
         </tbody>
     </table>
 </div>
 <div class="function">
     <span class="text">全局操作：</span>
-    <button type="button" class="btn-1">删除选中项</button>
+    <button type="button" class="btn-1" @click="delSelectedEvent">删除选中项</button>
 </div>
 <div class="page">
-    <Page :total="{$res->total()}" size="small" show-elevator show-total />
+    <Page :total="data.total" size="small" show-elevator show-total />
 </div>
 {/block}
 

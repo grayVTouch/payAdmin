@@ -8,8 +8,8 @@
 
 namespace app\pay\Controller;
 
-use app\common\lib\Category;
 use Exception;
+use app\common\lib\Category;
 use think\Controller as BaseController;
 use app\pay\util\Misc;
 use think\facade\View;
@@ -100,13 +100,16 @@ class Controller extends BaseController
             'id' => 'id' ,
             'pid' => 'p_id'
         ] , true , false);
-        // 赋值到模板
+        $res = [
+            'all' => $pos ,
+            'top' => $pos[0] ,
+            'sec' => $pos[1] ,
+            'cur' => $pos[count($pos) - 1]
+        ];
         View::share([
-            'pos' => [
-                'all' => $pos ,
-                'top' => $pos[0] ,
-                'cur' => $pos[1]
-            ]
+            'pos' => $res
         ]);
+        // 保存到 session
+        session('pos' , $res);
     }
 }

@@ -1,0 +1,52 @@
+{extend name='Public::public' /}
+
+{block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/form/input.css">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css">
+<link rel="stylesheet" href="{$act_url}/css/role.css">
+{/block}
+
+{block name='con'}
+<form @submit="submit" ref="form" data-id="{$id}" data-type="{$type}">
+    <table class="input-tb">
+        <tbody>
+        <tr :class="error.name == '' ? '' : 'error'">
+            <td>名称</td>
+            <td>
+                <input type="text" v-model="form.name" class="form-text">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.name }}</span>
+            </td>
+        </tr>
+        <tr :class="error.code == '' ? '' : 'error'">
+            <td>代码</td>
+            <td>
+                <input type="number" v-model="form.code" step='0' class="form-text">
+                <span class="necessary hide">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.code }}</span>
+            </td>
+        </tr>
+        <tr :class="error.weight == '' ? '' : 'error'">
+            <td>权重</td>
+            <td>
+                <input type="number" v-model="form.weight" step='0' class="form-text">
+                <span class="necessary hide">*</span>
+                <span class="tip">默认：0</span>
+                <span class="msg">{{ error.weight }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="btn-2">提交</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{/block}
+
+{block name='script'}
+<script src="{$act_url}/js/role.js?version={$version}"></script>
+{/block}
