@@ -1,0 +1,21 @@
+.line-tb thead tr .th-id {
+    width: 70px;
+}
+
+
+.line-tb thead tr .th-opr {
+    width: 80px;
+}
+
+.line-tb thead tr .th-status {
+    width: 105px;
+}
+
+
+.line-tb thead tr .th-time {
+    width: 125px;
+}
+
+.line-tb thead tr .th-name {
+    width: 140px;
+}

@@ -8,7 +8,7 @@
 
 return [
     // 每页显示数量
-    'list_rows' => 20 ,
+    'list_rows' => 12 ,
     // 客户端分页参数
     'var_page' => 'page' ,
 ];

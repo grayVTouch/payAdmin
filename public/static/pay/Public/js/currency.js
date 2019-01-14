@@ -15,7 +15,12 @@ function genUrl(c , a , param){
 }
 
 // 生成锚点链接
-function toLink(id){
-    let url = window.location.href.split('#') + '#' + id;
+function toAnchorLink(id){
+    let url = window.location.href.split('#')[0] + '#' + id;
     window.location.href = url;
+}
+
+// 获取对象的首个属性
+function firstKey(obj){
+    return Object.keys(obj)[0];
 }

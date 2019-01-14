@@ -31,7 +31,7 @@
                 let self = this;
                 topContext.ins.load.show();
                 $.post({
-                    url: genUrl('Role' , 'list' , {page: this.page}) ,
+                    url: genUrl('Route' , 'list') ,
                     success (data) {
                         topContext.ins.load.hide();
                         if (data.code != '000') {
@@ -142,6 +142,7 @@
                 this.page = page;
                 this.initData();
             } ,
+
 
             // 删除数据
             del (idList) {

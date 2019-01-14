@@ -12,3 +12,13 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
+
+
+
+.ivu-breadcrumb {
+    color: #e4e4e4;
+}
+
+.ivu-breadcrumb a {
+    color: white;
+}

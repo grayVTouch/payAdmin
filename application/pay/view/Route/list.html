@@ -1,3 +1,4 @@
+
 {extend name='Public::public' /}
 
 {block name='link'}
@@ -12,7 +13,7 @@
     <div class="component-title">
         <div class="left">数据列表</div>
         <div class="right">
-            <a :href="genUrl('Role' , 'addView')">添加</a>
+            <a :href="genUrl('Route' , 'addView')">添加</a>
         </div>
     </div>
     <table class="line-tb">
@@ -21,6 +22,8 @@
             <th class="th-cbox"><input type="checkbox" @click="selectedAllEvent"></th>
             <th class="th-id">id</th>
             <th class="th-name">名称</th>
+            <th class="th-name">链接</th>
+            <th class="th-status">状态</th>
             <th class="th-number">权重</th>
             <th class="th-time">创建时间</th>
             <th class="th-opr">操作</th>
@@ -30,12 +33,25 @@
         <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
             <td><input type="checkbox" class="c-box"></td>
             <td>{{ v.id }}</td>
-            <td>{{ v.name }}</td>
+            <td class="multiple-rows">
+                <div class="row">【中文名】{{ v.name }}</div>
+                <div class="row">【英文名】{{ v.en }}</div>
+            </td>
+            <td class="multiple-rows">
+                <div class="row">【模块】{{ v.module }}</div>
+                <div class="row">【控制器】{{ v.controller }}</div>
+                <div class="row">【动作】{{ v.action }}</div>
+                <div class="row">【链接】{{ v.link }}</div>
+            </td>
+            <td class="multiple-rows">
+                <div class="row">【是否菜单】{{ v.is_menu }}</div>
+                <div class="row">【是否启用】{{ v.enable }}</div>
+            </td>
             <td>{{ v.weight }}</td>
             <td>{{ v.create_time }}</td>
-            <td>
-                <a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id})">编辑</a>
-                <button type="button" class="btn-1" @click="delEvent(v.id)">删除</button>
+            <td class="multiple-rows">
+                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id})">编辑</a></div>
+                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
             </td>
         </tr>
         </tbody>

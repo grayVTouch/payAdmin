@@ -25,8 +25,26 @@
             } ,
 
             // 跳转到给定链接
-            toLink (id) {
-                return toLink(id);
+            toAnchorLink (id) {
+                return toAnchorLink(id);
+            } ,
+
+            // 返回针对某个值得类名！！
+            errorClass (val) {
+                return G.isValid(val) ? 'error' : '';
+            } ,
+
+            // 提示操作成功
+            layerSucc (msg , option) {
+                option = G.isObject(option) ? option : {};
+                option.icon = 1;
+                return layer.alert(msg , option);
+            } ,
+            // 提示操作失败
+            layerFail () {
+                return layer.alert(2 , {
+                    icon: 2
+                });
             }
         }
     });

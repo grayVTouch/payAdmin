@@ -10,17 +10,10 @@ namespace app\pay\controller;
 
 use Validate;
 use app\pay\util\Misc;
-use app\pay\model\Role as MRole;
+use app\pay\model\Route as MRoute;
 
-class Role extends Controller
+class Route extends Controller
 {
-    // 角色权限
-    public function perms()
-    {
-        $menu = Misc::menu();
-        return Misc::response('000' , '' , $menu);
-    }
-
     // 视图：角色列表
     public function listView()
     {
@@ -30,14 +23,14 @@ class Role extends Controller
     // 角色列表
     public function list()
     {
-        $res = MRole::paginate();
+        $res = MRoute::paginate();
         return Misc::response('000' , '' , $res);
     }
 
     // 视图：编辑角色
     public function editView()
     {
-        return $this->fetch('role' , [
+        return $this->fetch('route' , [
             'id' => input('id') ,
             'type' => 'edit'
         ]);
@@ -46,16 +39,16 @@ class Role extends Controller
     // 视图：添加角色
     public function addView()
     {
-        return $this->fetch('role' , [
+        return $this->fetch('route' , [
             'type' => 'add'
         ]);
     }
 
     // 角色数据
-    public function role()
+    public function route()
     {
         $id = input('id');
-        $res = MRole::where('id' , $id)->find();
+        $res = MRoute::where('id' , $id)->find();
         return Misc::response('000' , '' , $res);
     }
 
@@ -72,7 +65,7 @@ class Role extends Controller
             return Misc::response('001' , '' , $validator->getError());
         }
         $data['weight'] = isset($data['weight']) ? intval($data['weight']) : config('app.weight');
-        $m = new MRole();
+        $m = new MRoute();
         $m->allowField([
             'name' ,
             'code' ,
@@ -98,7 +91,7 @@ class Role extends Controller
             return Misc::response('001' , '' , $validator->getError());
         }
         $data['weight'] = isset($data['weight']) ? intval($data['weight']) : config('app.weight');
-        $m = new MRole();
+        $m = new MRoute();
         $m->allowField([
             'name' ,
             'code' ,
@@ -117,7 +110,7 @@ class Role extends Controller
         if (empty($id_list)) {
             return Misc::response('002' , '请提供待删除项');
         }
-        $res = MRole::whereIn('id' , $id_list)->delete();
+        $res = MRoute::whereIn('id' , $id_list)->delete();
         return Misc::response('000' , '操作成功' , $res);
     }
 }

@@ -64,6 +64,6 @@ class Route extends Model
     // 生成链接
     private static function url($m , $c , $a)
     {
-        return $m == '' || $c == '' || $a == 'javascript:void;' ? '' : Misc::genUrl($m , $c , $a);
+        return $m == '' || $c == '' || $a == '' ? '' : Misc::genUrl($m , $c , $a);
     }
 }

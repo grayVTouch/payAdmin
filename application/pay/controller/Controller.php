@@ -86,6 +86,8 @@ class Controller extends BaseController
                 return ;
             }
         }
+        // 记录用户浏览足迹
+        self::saveHis();
         // 找到当前路由
         $route = Route::where([
             ['module' , '=' , $mvc->module] ,
@@ -100,6 +102,10 @@ class Controller extends BaseController
             'id' => 'id' ,
             'pid' => 'p_id'
         ] , true , false);
+        array_walk($pos , function(&$v){
+            $his = session('history');
+            $v['link'] = $his[$v['link']] ?? '';
+        });
         $res = [
             'all' => $pos ,
             'top' => $pos[0] ,
@@ -111,5 +117,15 @@ class Controller extends BaseController
         ]);
         // 保存到 session
         session('pos' , $res);
+    }
+
+    // 保存用户浏览足迹（用于正确获取到用户当前位置）
+    private function saveHis()
+    {
+        $path = '/' . request()->path();
+        $url  = request()->url();
+        $history = session('history') ?? [];
+        $history[$path] = $url;
+        session('history' , $history);
     }
 }

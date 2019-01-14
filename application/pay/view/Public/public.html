@@ -81,7 +81,7 @@
                 </div>
                 <div class="right">
                     <breadcrumb>
-                        <breadcrumb-item v-for="v in $store.state.pos.all" :key="v.id">{{ v.name }}</breadcrumb-item>
+                        <breadcrumb-item v-for="v in $store.state.pos.all" :key="v.id" :to="v.link">{{ v.name }}</breadcrumb-item>
                     </breadcrumb>
                 </div>
             </div>
