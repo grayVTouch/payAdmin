@@ -11,7 +11,10 @@
                 sec: {} ,
                 cur: {}
 
-            }
+            } ,
+            topContext ,
+            // 上传文件的名称
+            image: 'image' ,
         }
     });
 
@@ -40,12 +43,13 @@
                 option.icon = 1;
                 return layer.alert(msg , option);
             } ,
+
             // 提示操作失败
-            layerFail () {
-                return layer.alert(2 , {
+            layerFail (msg) {
+                return layer.alert(msg , {
                     icon: 2
                 });
-            }
+            } ,
         }
     });
 })();

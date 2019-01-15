@@ -7,10 +7,11 @@
 {/block}
 
 {block name='con'}
+<div id="fuck">数据测试</div>
 <form @submit="submit" ref="form" data-id="{$id ?? ''}" data-type="{$type}">
     <table class="input-tb">
         <tbody>
-        <tr :class="errorClass(error.name)">
+        <tr :class="errorClass(error.name)" id="name">
             <td>名称</td>
             <td>
                 <input type="text" v-model="form.name" class="form-text" @input="error.name = ''">
@@ -19,7 +20,7 @@
                 <span class="msg">{{ error.name }}</span>
             </td>
         </tr>
-        <tr :class="errorClass(error.code)">
+        <tr :class="errorClass(error.code)" id="code">
             <td>代码</td>
             <td>
                 <input type="number" v-model="form.code" step='0' @input="error.code = ''" class="form-text">
@@ -28,7 +29,7 @@
                 <span class="msg">{{ error.code }}</span>
             </td>
         </tr>
-        <tr :class="errorClass(error.weight)">
+        <tr :class="errorClass(error.weight)" id="weight">
             <td>权重</td>
             <td>
                 <input type="number" v-model="form.weight" step='0' @input="error.weight = ''" class="form-text">
@@ -37,6 +38,7 @@
                 <span class="msg">{{ error.weight }}</span>
             </td>
         </tr>
+
         <tr>
             <td colspan="2">
                 <button type="submit" class="btn-2">提交</button>

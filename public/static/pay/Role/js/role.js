@@ -82,7 +82,7 @@
                         topContext.ins.load.hide();
                         if (data.code == '001') {
                             self.error = data.data;
-                            toAnchorLink(firstKey(data.data));
+                            vScroll(firstKey(data.data));
                             return ;
                         }
                         if (data.code == '002') {

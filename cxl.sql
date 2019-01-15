@@ -49,7 +49,11 @@ insert into `cl_route` (name , en , module , controller , action , is_menu , ico
 ('角色权限' , null , 'pay' , 'Role' , 'perm' , 'y' , 'ios-paper' , 3) ,
 ('编辑角色' , null , 'pay' , 'Role' , 'editView' , 'n' , '' , 4) ,
 ('添加角色' , null , 'pay' , 'Role' , 'addView' , 'n' , '' , 4) ,
-('删除角色' , null , 'pay' , 'Role' , 'del' , 'n' , '' , 4);
+('删除角色' , null , 'pay' , 'Role' , 'del' , 'n' , '' , 4) ,
+
+('编辑路由' , null , 'pay' , 'Route' , 'editView' , 'n' , '' , 5) ,
+('添加路由' , null , 'pay' , 'Route' , 'addView' , 'n' , '' , 5) ,
+('删除路由' , null , 'pay' , 'Route' , 'del' , 'n' , '' , 5);
 
 insert into `cl_role_permission` (role_id , route_id) values
 (1 , 1) ,

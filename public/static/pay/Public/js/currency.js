@@ -24,3 +24,17 @@ function toAnchorLink(id){
 function firstKey(obj){
     return Object.keys(obj)[0];
 }
+
+// 指定 id 滚动到指定位置
+// 注意这是特意为当前项目而写的！
+// 如果换过一个容器元素就会出现错误！
+// 请仅在当前项目使用
+function vScroll (id , fn) {
+    let dom = G('#' + id);
+    let container = G('#doc-right');
+    let val = dom.getDocOffsetVal('top');
+    let extra = 50;
+    val -= extra;
+    container.vScroll(topContext.duration , val , fn);
+}
+

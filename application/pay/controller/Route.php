@@ -12,6 +12,8 @@ use Validate;
 use app\pay\util\Misc;
 use app\pay\model\Route as MRoute;
 
+
+
 class Route extends Controller
 {
     // 视图：角色列表
@@ -45,7 +47,7 @@ class Route extends Controller
     }
 
     // 角色数据
-    public function route()
+    public function get()
     {
         $id = input('id');
         $res = MRoute::where('id' , $id)->find();
@@ -64,11 +66,19 @@ class Route extends Controller
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
-        $data['weight'] = isset($data['weight']) ? intval($data['weight']) : config('app.weight');
+        $data['weight'] = $data['weight'] ?? config('app.weight');
+        $data['p_id'] = $data['p_id'] ?? 0;
         $m = new MRoute();
         $m->allowField([
             'name' ,
-            'code' ,
+            'en' ,
+            'module' ,
+            'controller' ,
+            'action' ,
+            'ico_for_font' ,
+            'is_menu' ,
+            'enable' ,
+            'p_id' ,
             'weight' ,
         ])->save($data);
         return Misc::response('000' , '操作成功');
@@ -90,11 +100,19 @@ class Route extends Controller
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
-        $data['weight'] = isset($data['weight']) ? intval($data['weight']) : config('app.weight');
+        $data['weight'] = $data['weight'] ?? config('app.weight');
+        $data['p_id'] = $data['p_id'] ?? 0;
         $m = new MRoute();
         $m->allowField([
             'name' ,
-            'code' ,
+            'en' ,
+            'module' ,
+            'controller' ,
+            'action' ,
+            'ico_for_font' ,
+            'is_menu' ,
+            'enable' ,
+            'p_id' ,
             'weight' ,
         ])->save($data , [
             'id' => $data['id']
@@ -112,5 +130,34 @@ class Route extends Controller
         }
         $res = MRoute::whereIn('id' , $id_list)->delete();
         return Misc::response('000' , '操作成功' , $res);
+    }
+
+    // 上传图片
+    public function saveImage()
+    {
+        $data = request()->post();
+        $validator = Validate::make([
+            'id' => 'require' ,
+            'type' => 'require' ,
+            'image' => 'require'
+        ] , [
+            'id.require' => '路由id尚未提供' ,
+            'type.require' => '保存类型尚未提供' ,
+            'image.require' => '图片尚未提供'
+        ]);
+        if (!$validator->check($data)) {
+            return Misc::response('002' , $validator->getError());
+        }
+        $column = $type = 'big' ? 'ico_for_big' : 'ico_for_small';
+        // 保存到数据库
+        MRoute::where('id' , $data['id'])->update([
+            $column => $data['image']
+        ]);
+        return Misc::response('000' , '操作成功');
+    }
+
+    // 数据测试
+    public function test()
+    {
     }
 }

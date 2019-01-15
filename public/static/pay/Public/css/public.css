@@ -309,8 +309,25 @@ body {
 
 }
 
+/**
+ * **************
+ * 内容
+ * **************
+ */
 .app .doc-right > .btm > .con {
     min-height: 300px;
     padding: 20px;
     background-color: white;
+}
+
+/**
+ * **************
+ * 底部标签
+ * **************
+ */
+.app .doc-right > .btm > .logo {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: white;
 }

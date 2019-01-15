@@ -2348,6 +2348,52 @@
      以下是以 SmallJs 作为命名空间的 基础函数库
      * ******************************************
      */
+    // 事件定时器轮询
+    g.loop = {
+        timer: null ,
+        // 每 20 毫秒轮询一次
+        freq: 20 ,
+        event: [
+            // {
+            //     check: null ,
+            //     callback: null
+            // }
+        ] ,
+        isStop: false ,
+        // 注册事件
+        register (check , callback) {
+            this.event.push({
+                check: check ,
+                callback: callback
+            });
+            return this;
+        } ,
+        // 停止事件轮询
+        stop () {
+            this.isStop = true;
+        } ,
+        // 轮询
+        loop () {
+            window.clearTimeout(this.timer);
+            var i = 0;
+            var e = null;
+            for (i = 0; i < this.event.length; ++i)
+            {
+                e = this.event[i];
+                if (e.check()) {
+                    e.callback();
+                    this.event.splice(i , 1);
+                    i--;
+                }
+            }
+            if (!this.isStop) {
+                window.setTimeout(this.loop.bind(this) , this.freq);
+            } else {
+                this.isStop = false;
+            }
+        } ,
+    };
+
     g.gesture = function(ox , oy , isSimple){
         ox = g.isNumber(ox) ? ox : 0;
         oy = g.isNumber(oy) ? oy : 0;

@@ -104,6 +104,5 @@ class UploadImage extends UploadFile {
             }
         }
         return $count;
-
     }
 }

@@ -15,5 +15,12 @@ window.topContext = {
     ins: {
         // 全局实例
         load: new Loading($('#pub-load-container').get(0))
+    } ,
+    // 业务字典
+    business: {
+        bool: {
+            y: '是' ,
+            n: '否'
+        }
     }
 };

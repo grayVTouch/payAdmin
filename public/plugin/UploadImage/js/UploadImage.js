@@ -154,6 +154,8 @@
             this._tempFailedUploadImageFileList = [];
             // 单次上传取消上传的图片数量
             this._tempCancelUploadImageFileList = [];
+            // 之前上传失败的图片
+            this._prevFailedUploadImageFileList = [];
             // 单次上传待上传的图片列表
             this._uploadedList			  	= [];
 
@@ -1044,7 +1046,6 @@
         // 并行上传图片
         parallelUploadImages: function(){
             var self	= this;
-
             if (this._uploadedList.length === 0) {
                 if (this._prevFailedUploadImageFileList.length === 0) {
                     console.log('无待上传图片');
@@ -1364,7 +1365,6 @@
             if (G.isFunction(this._before)) {
                 this._before.call(this);
             }
-
             if (this._type === 'parallel') {
                 this.parallelUploadImages();
             } else {

@@ -49,17 +49,19 @@ class Controller extends BaseController
     // 增加公共变量
     private function shareVar()
     {
-        $url = config('app.url');
+        $host = config('app.host');
         $mvc = Misc::mvc();
-        $plugin_url = sprintf('%s/plugin' , $url);
-        $res_url = sprintf('%s/static' , $url);
-        $pub_url = sprintf('%s/static/%s/Public' , $url , $mvc->module);
-        $act_url = sprintf('%s/static/%s/%s' , $url , $mvc->module , $mvc->controller);
+        $plugin_url = sprintf('%s/plugin' , $host);
+        $res_url = sprintf('%s/static' , $host);
+        $pub_url = sprintf('%s/static/%s/Public' , $host , $mvc->module);
+        $act_url = sprintf('%s/static/%s/%s' , $host , $mvc->module , $mvc->controller);
 
         // 视图共享变量
         View::share([
+            // 应用名称
+            'app_name' => config('app.app_name') ,
             // host
-            'url'       => config('app.url') ,
+            'url'       => $host ,
             // 应用版本（用于控制缓存更新）
             'version'   => config('app.version') ,
             // 插件路径

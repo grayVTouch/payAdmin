@@ -105,4 +105,23 @@ class Misc
         return sprintf('/%s/i' , $str);
     }
 
+    // 生成网络路径
+    public static function genNetUrl($path , $relative = true){
+        $path = format_path(str_replace('\\' , '/' , realpath($path)));
+        $host = $relative ? '' : config('app.host');
+        $host = empty($host) ? '/' : rtrim($host , '/') . '/';
+        return empty($path) ? '' : $host . str_replace(public_path() , '' , $path);
+    }
+
+    // 获取映射值
+    function getCorrectVal($key , $val){
+        $range = config($key);
+        foreach ($range as $k => $v)
+        {
+            if ($k == $val) {
+                return $v;
+            }
+        }
+        return '';
+    }
 }
