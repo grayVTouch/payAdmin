@@ -29,11 +29,12 @@
             // 获取数据
             initData () {
                 let self = this;
-                topContext.ins.load.show();
+                // topContext.ins.load.show();
+                this.idList = [];
                 $.post({
                     url: genUrl('Role' , 'list' , {page: this.page}) ,
                     success (data) {
-                        topContext.ins.load.hide();
+                        // topContext.ins.load.hide();
                         if (data.code != '000') {
                             layer.msg(data.msg);
                             return ;

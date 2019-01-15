@@ -53,6 +53,34 @@ class Route extends Model
         return  $get(0);
     }
 
+    // 获取所有菜单项（超级管理员特权！）
+    public static function menus()
+    {
+        $get = function($route_id , array &$res = []) use(&$get){
+            static $count = 0;
+            if ($count++ > 100) {
+                throw new Exception('死循环');
+            }
+            $res = self::where([
+                    ['p_id' , '=' , $route_id] ,
+                    ['enable' , '=' , 'y'] ,
+                    ['is_menu' , '=' , 'y'] ,
+                ])->order('weight' , 'desc')
+                ->field('*')
+                ->select()
+                ->toArray();
+            foreach ($res as &$v)
+            {
+                // 新增属性
+                $v['link'] = self::url($v['module'] , $v['controller'] , $v['action']);
+                $v['children'] = [];
+                $get($v['id'] , $v['children']);
+            }
+            return $res;
+        };
+        return  $get(0);
+    }
+
     // 所有记录
     public static function _all()
     {

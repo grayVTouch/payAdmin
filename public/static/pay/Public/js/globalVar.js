@@ -22,5 +22,9 @@ window.topContext = {
             y: '是' ,
             n: '否'
         }
+    } ,
+    path: {
+        // 插件路径
+        pluginUrl: '/plugin/' ,
     }
 };

@@ -51,7 +51,7 @@
             <td>{{ v.create_time }}</td>
             <td class="multiple-rows">
                 <div class="row"><a class="btn-1" :href="genUrl('Route' , 'editView' , {id: v.id})">编辑</a></div>
-                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
+                <div class="row"><button type="button" class="btn-1" @click.stop="delEvent(v.id)">删除</button></div>
             </td>
         </tr>
         </tbody>

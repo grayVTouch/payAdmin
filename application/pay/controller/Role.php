@@ -30,7 +30,7 @@ class Role extends Controller
     // 角色列表
     public function list()
     {
-        $res = MRole::paginate();
+        $res = MRole::order('id' , 'desc')->paginate();
         return Misc::response('000' , '' , $res);
     }
 
@@ -78,7 +78,7 @@ class Role extends Controller
             'code' ,
             'weight' ,
         ])->save($data);
-        return Misc::response('000' , '操作成功');
+        return Misc::response('000' , '操作成功' , $m->id);
     }
 
     // 编辑角色
@@ -106,7 +106,7 @@ class Role extends Controller
         ])->save($data , [
             'id' => $data['id']
         ]);
-        return Misc::response('000' , '操作成功');
+        return Misc::response('000' , '操作成功' , $m->id);
     }
 
     // 删除角色

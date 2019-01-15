@@ -29,11 +29,12 @@
             // 获取数据
             initData () {
                 let self = this;
-                topContext.ins.load.show();
+                // topContext.ins.load.show();
+                this.idList = [];
                 $.post({
                     url: genUrl('Route' , 'list') ,
                     success (data) {
-                        topContext.ins.load.hide();
+                        // topContext.ins.load.hide();
                         if (data.code != '000') {
                             layer.msg(data.msg);
                             return ;
@@ -153,7 +154,7 @@
                 let self = this;
                 topContext.ins.load.show();
                 $.post({
-                    url: genUrl('Role' , 'del') ,
+                    url: genUrl('Route' , 'del') ,
                     data: {
                         id_list: JSON.stringify(idList)
                     } ,

@@ -25,7 +25,7 @@ class Route extends Controller
     // 角色列表
     public function list()
     {
-        $res = MRoute::paginate();
+        $res = MRoute::order('id' , 'desc')->paginate();
         return Misc::response('000' , '' , $res);
     }
 
@@ -81,7 +81,7 @@ class Route extends Controller
             'p_id' ,
             'weight' ,
         ])->save($data);
-        return Misc::response('000' , '操作成功');
+        return Misc::response('000' , '操作成功' , $m->id);
     }
 
     // 编辑角色
@@ -117,7 +117,7 @@ class Route extends Controller
         ])->save($data , [
             'id' => $data['id']
         ]);
-        return Misc::response('000' , '操作成功');
+        return Misc::response('000' , '操作成功' , $m->id);
     }
 
     // 删除角色
@@ -148,7 +148,11 @@ class Route extends Controller
         if (!$validator->check($data)) {
             return Misc::response('002' , $validator->getError());
         }
-        $column = $type = 'big' ? 'ico_for_big' : 'ico_for_small';
+        $range = ['big' , 'small'];
+        if (!in_array($data['type'] , $range)) {
+            return Misc::response('002' , '不支持得保存类型');
+        }
+        $column = $data['type'] == 'big' ? 'ico_for_big' : 'ico_for_small';
         // 保存到数据库
         MRoute::where('id' , $data['id'])->update([
             $column => $data['image']

@@ -18,11 +18,12 @@ class Misc
     // 获取菜单
     public static function menu()
     {
-        $menu = session('menu');
-        if (is_null($menu)) {
-            $menu = Route::menu(self::user()->role_id);
-            session('menu' , $menu);
-        }
+//        $menu = session('menu');
+//        if (is_null($menu)) {
+            $user = self::user();
+            $menu = $user->is_root == 'y' ? Route::menus() : Route::menu($user->role_id);
+//            session('menu' , $menu);
+//        }
         return $menu;
     }
 
@@ -87,11 +88,11 @@ class Misc
     // 获取所有路由
     public static function route()
     {
-        $route = session('route');
-        if (is_null($route)) {
+//        $route = session('route');
+//        if (is_null($route)) {
             $route = Route::_all();
-            session('route' , $route);
-        }
+//            session('route' , $route);
+//        }
         return $route;
     }
 
