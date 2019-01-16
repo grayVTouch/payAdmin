@@ -9,13 +9,19 @@
 namespace app\pay\controller;
 
 use Validate;
+use Db;
+use Exception;
+use app\common\lib\Category;
 use app\pay\util\Misc;
+use app\pay\model\Route;
 use app\pay\model\Role as MRole;
+use app\pay\model\RolePermission;
+
 
 class Role extends Controller
 {
     // 角色权限
-    public function perms()
+    public function menu()
     {
         $menu = Misc::menu();
         return Misc::response('000' , '' , $menu);
@@ -119,5 +125,66 @@ class Role extends Controller
         }
         $res = MRole::whereIn('id' , $id_list)->delete();
         return Misc::response('000' , '操作成功' , $res);
+    }
+
+    // 视图：角色权限
+    public function permView()
+    {
+        $id = input('id');
+        return $this->fetch('perm' , compact('id'));
+    }
+
+    // 用户权限
+    public function perm()
+    {
+        $id = input('id');
+        if (empty($id)) {
+            return Misc::response('002' , '角色id尚未提供');
+        }
+        // 路由列表
+        $route  = Route::_all()->toArray();
+        $route  = Category::childrens(0 , $route , [
+            'id' => 'id' ,
+            'pid' => 'p_id'
+        ] , false , true);
+
+        // 角色拥有的路由列表
+        $perm   = RolePermission::where('role_id' , $id)->select();
+        return Misc::response('000' , '' , compact('route' , 'perm'));
+    }
+
+    // 用户授权
+    public function authorize()
+    {
+        $data = request()->post();
+        $validator = Validate::make([
+            'id' => 'require' ,
+            'route' => 'require'
+        ] , [
+            'id.require' => '角色id尚未提供' ,
+            'route.require' => '授权的路由列表尚未提供' ,
+        ]);
+        if (!$validator->check($data)) {
+            return Misc::response('002' , $validator->getError());
+        }
+        $data['route'] = json_decode($data['route']);
+        try {
+            Db::startTrans();
+            // 撤销用户之前的授权
+            RolePermission::where('role_id' , $data['id'])->delete();
+            // 重新对角色进行授权
+            foreach ($data['route'] as $v)
+            {
+                RolePermission::insert([
+                    'role_id'   => $data['id'] ,
+                    'route_id'  => $v
+                ]);
+            }
+            Db::commit();
+            return Misc::response('000' , '操作成功');
+        } catch(Exception $e) {
+            Db::rollBack();
+            throw $e;
+        }
     }
 }

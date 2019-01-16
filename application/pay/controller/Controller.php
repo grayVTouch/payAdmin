@@ -26,7 +26,8 @@ class Controller extends BaseController
 
     // 排除的路由
     private $exclude = [
-        '*Login*'
+        '*Login*' ,
+        '*User/add'
     ];
 
     public function __construct()

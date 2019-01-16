@@ -84,14 +84,37 @@ class Route extends Model
     // 所有记录
     public static function _all()
     {
-        return self::select()->each(function($v){
+        $res = self::select()->each(function($v){
             $v->link = self::url($v->module , $v->controller , $v->action);
         });
+        self::multiple($res);
+        return $res;
     }
 
     // 生成链接
     private static function url($m , $c , $a)
     {
         return $m == '' || $c == '' || $a == '' ? '' : Misc::genUrl($m , $c , $a);
+    }
+
+    // 单条：数据处理
+    public static function single(Route $m = null)
+    {
+        if (is_null($m)) {
+            return ;
+        }
+        // 是否菜单
+        $m->is_menu_explain = Misc::mapVal('business.bool' , $m->is_menu);
+        // 是否启用
+        $m->enable_explain = Misc::mapVal('business.bool' , $m->enable);
+    }
+
+    // 多条：数据处理
+    public static function multiple(Collection $collection)
+    {
+        foreach ($collection as $v)
+        {
+            self::single($v);
+        }
     }
 }

@@ -1,0 +1,36 @@
+{extend name='Public::public' /}
+
+{block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/form/input.css">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css">
+<link rel="stylesheet" href="{$act_url}/css/perm.css">
+{/block}
+
+{block name='con'}
+<div class="component-title">
+    <div class="left">权限分配</div>
+    <div class="right"></div>
+</div>
+<div class="perm">
+    <form @submit="submit" data-id="{$id}" ref="form">
+        <table class="input-tb">
+            <tbody>
+            <tr>
+                <td>
+                    <tree :data="tree" show-checkbox multiple :check-strictly="relation" @on-select-change="selectItemForTree" @on-check-change="selectCheckboxForTree"></tree>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="btn-2">授权</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+{/block}
+
+{block name='script'}
+<script src="{$act_url}/js/perm.js?version={$version}"></script>
+{/block}

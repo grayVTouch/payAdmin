@@ -35,9 +35,10 @@
             <td>{{ v.code }}</td>
             <td>{{ v.weight }}</td>
             <td>{{ v.create_time }}</td>
-            <td>
-                <a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id})">编辑</a>
-                <button type="button" class="btn-1" @click="delEvent(v.id)">删除</button>
+            <td class="multiple-rows">
+                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id})">编辑</a></div>
+                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'permView' , {id: v.id})">权限分配</a></div>
+                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
             </td>
         </tr>
         </tbody>

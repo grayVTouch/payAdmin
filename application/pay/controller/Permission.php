@@ -12,10 +12,12 @@ namespace app\pay\controller;
 
 class Permission extends Controller
 {
+    protected $middleware = [];
+
     // 无权限
     public function denyView()
     {
-        return view('deny.html');
+        return view('deny');
     }
 
 

@@ -13,6 +13,7 @@ namespace app\pay\middleware;
 use Closure;
 use app\pay\model\Route;
 use app\pay\util\Misc;
+use app\pay\util\User;
 use think\Response;
 
 class PermAuth
@@ -41,29 +42,40 @@ class PermAuth
                 return ;
             }
         }
-        if (Misc::user()->is_root == 'y') {
+        $user = Misc::user();
+        if ($user->is_root == 'y') {
             // 超级管理员，跳过权限认证
             return true;
         }
+        // 检查路由表是否存在该路由，如果不存在，默认为已授权
         $mvc = Misc::mvc();
-        $perm = session('perm');
-        if (is_null($perm)) {
-            $perm = Route::alias('ro')
-                ->join('role_permission rp' , 'ro.id = rp.route_id')
-                ->where('rp.role_id' , user()->role_id)
-                ->select();
-            session('perm' , $perm);
+        $count = Route::where([
+            ['module' , '=' , $mvc->module] ,
+            ['controller' , '=' , $mvc->controller] ,
+            ['action' , '=' , $mvc->action] ,
+        ])->count();
+        if ($count == 0) {
+            // 路由表中不存在该路由，默认放行
+            return ;
         }
-        // 检查用户是否拥有该权限
-        foreach ($perm as $v)
-        {
-            if ($v->module == $mvc->module && $v->controller == $mvc->controller && $v->action == $mvc->action) {
-                return ;
-            }
+        $count = Route::alias('ro')
+            ->join('role_permission rp' , 'ro.id = rp.route_id')
+            ->where([
+                ['rp.role_id' , '=' , $user->role_id] ,
+                ['ro.module' , '=' , $mvc->module] ,
+                ['ro.controller' , '=' , $mvc->controller] ,
+                ['ro.action' , '=' , $mvc->action] ,
+            ])->count();
+        if ($count > 0) {
+            // 角色权限中搜索到对应路由，那么用户具备该权限！放行
+            return ;
         }
+
+        // 无权限访问
+//        User::loginOut();
         if ($request->isPost()) {
             return Misc::response('002' , '禁止访问');
         }
-        return redirect(Misc::genUrl($mvc->module , 'Permission' , 'deny'));
+        return redirect(Misc::genUrl($mvc->module , 'Permission' , 'denyView'));
     }
 }

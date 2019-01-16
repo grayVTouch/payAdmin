@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>你无权限访问该页面</h2>
+<h5><span id="wait"></span>s 后跳转到上一页</h5>
+<script>
+    let wait = document.getElementById('wait');
+    let d = 2;
+    let timecount = () => {
+        wait.textContent = d;
+        d--;
+        if (d < 0) {
+            window.history.go(-1);
+            return ;
+        }
+        window.setTimeout(timecount , 1 * 1000);
+    };
+    timecount();
+</script>
+</body>
+</html>

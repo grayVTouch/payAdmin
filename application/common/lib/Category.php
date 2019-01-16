@@ -123,7 +123,7 @@ class Category {
         if ($struct) {
             // 保存结构
             $get_struct = function($id) use(&$get_struct , $res , $field){
-                $children = self::children($id , $res);
+                $children = self::children($id , $res , $field);
                 foreach ($children as &$v)
                 {
                     $v['children'] = $get_struct($v[$field['id']]);

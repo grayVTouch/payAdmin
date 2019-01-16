@@ -26,7 +26,7 @@
         methods: {
             // 获取菜单
             getMenu () {
-                $.post(genUrl('Role' , 'perms') , (data) => {
+                $.post(genUrl('Role' , 'menu') , (data) => {
                     if (data.code != '000') {
                         layer.msg(data.msg);
                         return ;

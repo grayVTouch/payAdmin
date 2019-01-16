@@ -25,8 +25,6 @@
             this.dom.form = $(this.$refs.form);
             this.form.id = this.dom.form.data('id');
             this.type = this.dom.form.data('type');
-
-            this.initData();
         } ,
 
         methods: {

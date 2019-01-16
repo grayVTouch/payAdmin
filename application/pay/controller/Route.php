@@ -25,7 +25,9 @@ class Route extends Controller
     // 角色列表
     public function list()
     {
-        $res = MRoute::order('id' , 'desc')->paginate();
+        $res = MRoute::order('id' , 'desc')->paginate()->each(function($v){
+            MRoute::single($v);
+        });
         return Misc::response('000' , '' , $res);
     }
 
@@ -46,7 +48,7 @@ class Route extends Controller
         ]);
     }
 
-    // 角色数据
+    // 获取单条记录
     public function get()
     {
         $id = input('id');

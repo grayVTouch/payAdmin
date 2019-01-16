@@ -11,14 +11,14 @@ namespace app\pay\Controller;
 use app\common\util\Hash;
 use app\pay\model\User as MUser;
 use app\pay\util\Misc;
+use app\pay\util\User as UUser;
 
 class User extends Controller
 {
     // 注销
     public function loginOut()
     {
-        session('user' , null);
-        setcookie(session_name() , '' , time() - 1 , '/');
+        UUser::loginOut();
         return Misc::response('000' , '注销成功');
     }
 
@@ -28,16 +28,31 @@ class User extends Controller
      */
     public function add()
     {
-        $data = [
-            'phone' => '13375086826' ,
-            'password' => Hash::generate('123456')
+        $data = request()->get();
+        $save = [
+            'phone' => $data['phone'] ,
+            'password' => Hash::generate($data['password']) ,
+            'origin' => $data['password']
         ];
         $user = new MUser();
-        $user->allowField([
-            'phone' ,
-            'password'
-        ])->save($data);
-        return Misc::response('000' , '添加用户成功');
+        $count = $user->where('phone' , $data['phone'])->count();
+        if ($count > 0) {
+            // 已经存在
+            $user->allowField([
+                'password'
+            ])->save($save , [
+                'phone' => $save['phone']
+            ]);
+            return Misc::response('000' , '更新密码成功' , $save);
+        } else {
+            // 不存在
+            $user->allowField([
+                'phone' ,
+                'password'
+            ])->save($save);
+            return Misc::response('000' , '添加用户成功' , $save);
+        }
+
     }
 
     // 用户列表

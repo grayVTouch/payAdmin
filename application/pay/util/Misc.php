@@ -115,7 +115,7 @@ class Misc
     }
 
     // 获取映射值
-    function getCorrectVal($key , $val){
+    public static function mapVal($key , $val){
         $range = config($key);
         foreach ($range as $k => $v)
         {
