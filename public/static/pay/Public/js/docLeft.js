@@ -7,6 +7,7 @@
             dom: {
 
             } ,
+            accordion: true ,
             menu: [] ,
             activeName: '' ,
             openName: [] ,

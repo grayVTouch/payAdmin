@@ -25,10 +25,51 @@ class Route extends Controller
     // 角色列表
     public function list()
     {
-        $res = MRoute::order('id' , 'desc')->paginate()->each(function($v){
-            MRoute::single($v);
-        });
-        return Misc::response('000' , '' , $res);
+        $data = request()->post();
+        $data['id']     = $data['id'] ?? '';
+        $data['module'] = $data['module'] ?? '';
+        $data['controller'] = $data['controller'] ?? '';
+        $data['action']  = $data['action'] ?? '';
+        $data['is_menu'] = $data['is_menu'] ?? '';
+        $data['enable'] = $data['enable'] ?? '';
+        $data['p_id'] = $data['p_id'] ?? '';
+        $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'id|desc';
+        $order = explode('|' , $data['order']);
+        $where = [];
+        if ($data['id'] != '') {
+            $where[] = ['id' , '=' , $data['id']];
+        }
+        if ($data['name'] != '') {
+            $where[] = ['name' , 'like' , "%{$data['name']}%"];
+        }
+        if ($data['module'] != '') {
+            $where[] = ['module' , 'like' , "%{$data['module']}%"];
+        }
+        if ($data['controller'] != '') {
+            $where[] = ['controller' , 'like' , "%{$data['controller']}%"];
+        }
+        if ($data['action'] != '') {
+            $where[] = ['action' , 'like' , "%{$data['action']}%"];
+        }
+        if ($data['is_menu'] != '') {
+            $where[] = ['is_menu' , '=' , $data['is_menu']];
+        }
+        if ($data['enable'] != '') {
+            $where[] = ['enable' , '=' , $data['enable']];
+        }
+        if ($data['p_id'] != '') {
+            $where[] = ['p_id' , '=' , $data['p_id']];
+        }
+        $res = MRoute::where($where)
+            ->order($order[0] , $order[1])
+            ->paginate()
+            ->each(function($v){
+                MRoute::single($v);
+            });
+        return Misc::response('000' , '' , [
+            'filter' => $data ,
+            'data' => $res
+        ]);
     }
 
     // 视图：编辑角色

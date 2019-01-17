@@ -3,6 +3,10 @@
  * 完整的页面结构
  * *********************
  */
+.app .doc-right > .btm > .con {
+    position: relative;
+}
+
 .app .doc-right > .btm > .con > * {
     margin-bottom: 20px;
 }
@@ -11,6 +15,19 @@
     margin-bottom: 0;
 }
 
-.app .doc-right > .btm > .con .page {
+.app .doc-right > .btm > .con > .page {
     text-align: center;
+}
+
+/**
+ * ***************
+ * 列表表单搜索框
+ * ***************
+ */
+.app .doc-right > .btm > .con > .search {
+
+}
+
+.app .doc-right > .btm > .con > .search > .line {
+    margin-bottom: 12px;
 }

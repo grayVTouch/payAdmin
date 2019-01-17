@@ -90,7 +90,7 @@ class Controller extends BaseController
             }
         }
         // 记录用户浏览足迹
-        self::saveHis();
+//        self::saveHis();
         // 找到当前路由
         $route = Route::where([
             ['module' , '=' , $mvc->module] ,
@@ -105,10 +105,10 @@ class Controller extends BaseController
             'id' => 'id' ,
             'pid' => 'p_id'
         ] , true , false);
-        array_walk($pos , function(&$v){
-            $his = session('history');
-            $v['link'] = $his[$v['link']] ?? '';
-        });
+//        array_walk($pos , function(&$v){
+//            $his = session('history');
+//            $v['link'] = $his[$v['link']] ?? '';
+//        });
         $res = [
             'all' => $pos ,
             'top' => $pos[0] ,

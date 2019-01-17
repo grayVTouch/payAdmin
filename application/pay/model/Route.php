@@ -11,10 +11,10 @@ namespace app\pay\model;
 use app\pay\util\Misc;
 use Exception;
 
-use think\Model;
+use think\Model as BaseModel;
 use think\Model\Collection;
 
-class Route extends Model
+class Route extends BaseModel implements Model
 {
     public function role()
     {
@@ -98,7 +98,7 @@ class Route extends Model
     }
 
     // 单条：数据处理
-    public static function single(Route $m = null)
+    public static function single(BaseModel $m = null)
     {
         if (is_null($m)) {
             return ;

@@ -35,7 +35,7 @@
             <div class="text">{$user->phone}</div>
         </div>
         <div class="btm">
-            <i-menu theme="dark" ref="menu" :accordion="true" mode="vertical" width="200" @on-select="linkTo" :active-name="activeName" :open-names="openName">
+            <i-menu theme="dark" ref="menu" :accordion="accordion" mode="vertical" width="200" @on-select="linkTo" :active-name="activeName" :open-names="openName">
                 <submenu v-for="v in menu" :key="v.id" :name="v.id">
                     <template slot="title">
                         <icon :type="v.ico_for_font"></icon>{{ v.name }}
@@ -87,13 +87,21 @@
             </div>
             <div class="con">
                 {block name='con'}{/block}
+                <!-- 内容区域加载层 -->
+                <div class="loading-container hide" ref="load_container">
+                    <div class="background"></div>
+                    <div class="loader loader-1">
+                        <div class="loader-outter"></div>
+                        <div class="loader-inner"></div>
+                    </div>
+                </div>
             </div>
             <div class="logo">{$app_name}</div>
         </div>
     </div>
 </div>
 
-<!-- 加载层 -->
+<!-- 全屏加载层 -->
 <div class="loading-container hide" id="pub-load-container">
     <div class="background"></div>
     <div class="loader loader-1">
@@ -115,6 +123,7 @@
 <script src="{$pub_url}/js/currency.js?version={$version}"></script>
 <script src="{$pub_url}/js/globalVar.js?version={$version}"></script>
 
+<script src="{$pub_url}/js/mixin.js?version={$version}"></script>
 <script src="{$pub_url}/js/public.js?version={$version}"></script>
 <script src="{$pub_url}/js/docLeft.js?version={$version}"></script>
 <script src="{$pub_url}/js/topForDocRight.js?version={$version}"></script>

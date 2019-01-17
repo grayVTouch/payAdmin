@@ -54,6 +54,10 @@ insert into `cl_route` (name , en , module , controller , action , is_menu , ico
 ('添加路由' , null , 'pay' , 'Route' , 'addView' , 'n' , '' , 5) ,
 ('删除路由' , null , 'pay' , 'Route' , 'del' , 'n' , '' , 5);
 
-
 -- alter table `cl_user` drop `is_root`;
 -- alter table `cl_user` add `is_root` enum('y' , 'n') default 'n' comment '是否超级管理员：y-是 n-否';
+-- alter table `cl_user` add `avatar` varchar(500) comment '头像';
+-- alter table `cl_user` add `username` varchar(500) comment '用户名';
+-- alter table `cl_user` add `avatar` varchar(500) comment '头像';
+
+

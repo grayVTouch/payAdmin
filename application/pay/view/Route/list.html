@@ -3,12 +3,106 @@
 
 {block name='link'}
 <link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css?version={$version}">
 <link rel="stylesheet" href="{$plugin_url}/css/form/filter.css?version={$version}">
 <link rel="stylesheet" href="{$pub_url}/css/list.css?version={$version}">
 <link rel="stylesheet" href="{$act_url}/css/list.css?version={$version}">
 {/block}
 
 {block name='con'}
+<form @submit.prevent="initData" @reset.prevent="reset" class="search">
+    <div class="line">
+        <div class="component-title">
+            <div class="left">筛选</div>
+            <div class="right"></div>
+        </div>
+        <div class="filter-options">
+            <div class="option">
+                <div class="field">ID：</div>
+                <div class="value"><input type="number" v-model="form.id" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">名称：</div>
+                <div class="value"><input type="text" v-model="form.name" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">模块：</div>
+                <div class="value"><input type="text" v-model="form.module" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">控制器：</div>
+                <div class="value"><input type="text" v-model="form.controller" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">动作：</div>
+                <div class="value"><input type="text" v-model="form.action" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">上级ID：</div>
+                <div class="value"><input type="number" v-model="form.p_id" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">是否菜单：</div>
+                <div class="value">
+                    <radio-group v-model="form.is_menu">
+                        <radio v-for="(v,k) in $store.state.topContext.business.bool" :key="k" :label="k">{{ v }}</radio>
+                    </radio-group>
+                </div>
+            </div>
+
+            <div class="option">
+                <div class="field">是否启用：</div>
+                <div class="value">
+                    <radio-group v-model="form.enable">
+                        <radio v-for="(v,k) in $store.state.topContext.business.bool" :key="k" :label="k">
+                            <span>{{ v }}</span>
+                        </radio>
+                    </radio-group>
+                </div>
+            </div>
+
+            <div class="option">
+                <div class="field"></div>
+                <div class="value">
+                    <button type="submit" class="btn-1">提交</button>
+                    <button type="reset" class="btn-1">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line">
+        <div class="component-title">
+            <div class="left">排序</div>
+            <div class="right"></div>
+        </div>
+        <div class="filter-options">
+            <div class="option" v-for="v in order" :key="v.name">
+                <div class="field">{{ v.name }}：</div>
+                <div class="value">
+                    <radio-group v-model="form.order">
+                        <radio v-for="(v1,k1) in v.order" :label="k1" :key="k1">
+                            <span>{{ v1 }}</span>
+                        </radio>
+                    </radio-group>
+                </div>
+            </div>
+
+            <div class="option">
+                <div class="field"></div>
+                <div class="value">
+                    <button type="submit" class="btn-1">提交</button>
+                    <button type="reset" class="btn-1">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="list">
     <div class="component-title">
         <div class="left">数据列表</div>
@@ -32,7 +126,11 @@
         <tbody ref="tbody">
         <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
             <td><input type="checkbox" class="c-box"></td>
-            <td>{{ v.id }}</td>
+            <td class="multiple-rows">
+                <div class="row">【id】<b>{{ v.id }}</b></div>
+                <div class="row">【上级ID】<b>{{ v.p_id }}</b></div>
+                <div class="row"><img :src="v.ico_for_big" class="image"></div>
+            </td>
             <td class="multiple-rows">
                 <div class="row">【中文名】{{ v.name }}</div>
                 <div class="row">【英文名】{{ v.en }}</div>
@@ -44,8 +142,8 @@
                 <div class="row">【链接】{{ v.link }}</div>
             </td>
             <td class="multiple-rows">
-                <div class="row">【是否菜单】<span :class="v.is_menu == 'y' ? 'green' : 'red'">{{ v.is_menu_explain }}</span></div>
-                <div class="row">【是否启用】<span :class="v.enable == 'y' ? 'green' : 'red'">{{ v.enable_explain }}</span></div>
+                <div class="row">【是否菜单】<b :class="v.is_menu == 'y' ? 'green' : 'red'">{{ v.is_menu_explain }}</b></div>
+                <div class="row">【是否启用】<b :class="v.enable == 'y' ? 'green' : 'red'">{{ v.enable_explain }}</b></div>
             </td>
             <td>{{ v.weight }}</td>
             <td>{{ v.create_time }}</td>

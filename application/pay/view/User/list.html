@@ -1,12 +1,122 @@
 {extend name='Public::public' /}
 
 {block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
+<link rel="stylesheet" href="{$plugin_url}/css/form/filter.css?version={$version}">
+<link rel="stylesheet" href="{$pub_url}/css/list.css?version={$version}">
 <link rel="stylesheet" href="{$act_url}/css/list.css?version={$version}">
 {/block}
 
-{block name='title'}支付系统{/block}
+{block name='con'}
+<form @submit.prevent="initData" @reset.prevent="reset" class="search">
+    <div class="line">
+        <div class="component-title">
+            <div class="left">筛选</div>
+            <div class="right"></div>
+        </div>
+        <div class="filter-options">
+            <div class="option">
+                <div class="field">ID：</div>
+                <div class="value"><input type="number" v-model="form.id" class="form-text"></div>
+            </div>
 
-{block name='block'}{/block}
+            <div class="option">
+                <div class="field">名称：</div>
+                <div class="value"><input type="text" v-model="form.name" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">code：</div>
+                <div class="value"><input type="text" v-model="form.code" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field"></div>
+                <div class="value">
+                    <button type="submit" class="btn-1">提交</button>
+                    <button type="reset" class="btn-1">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line">
+        <div class="component-title">
+            <div class="left">排序</div>
+            <div class="right"></div>
+        </div>
+        <div class="filter-options">
+            <div class="option" v-for="v in order" :key="v.name">
+                <div class="field">{{ v.name }}：</div>
+                <div class="value">
+                    <radio-group v-model="form.order">
+                        <radio v-for="(v1,k1) in v.order" :label="k1" :key="k1">
+                            <span>{{ v1 }}</span>
+                        </radio>
+                    </radio-group>
+                </div>
+            </div>
+
+            <div class="option">
+                <div class="field"></div>
+                <div class="value">
+                    <button type="submit" class="btn-1">提交</button>
+                    <button type="reset" class="btn-1">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="list">
+    <div class="component-title">
+        <div class="left">数据列表</div>
+        <div class="right">
+            <a :href="genUrl('Role' , 'addView')">添加</a>
+        </div>
+    </div>
+    <table class="line-tb">
+        <thead>
+        <tr>
+            <th class="th-cbox"><input type="checkbox" @click="selectedAllEvent"></th>
+            <th class="th-id">id</th>
+            <th class="th-name">名称</th>
+            <th class="th-number">手机号</th>
+            <th class="th-number">角色</th>
+            <th class="th-number">状态</th>
+            <th class="th-time">创建时间</th>
+            <th class="th-opr">操作</th>
+        </tr>
+        </thead>
+        <tbody ref="tbody">
+        <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
+            <td><input type="checkbox" class="c-box"></td>
+            <td>{{ v.id }}</td>
+            <td class="multiple-rows">
+                <div class="row">【用户名】{{ v.username }}</div>
+                <div class="row">【昵称】{{ v.nick_name }}</div>
+                <div class="row">【真实姓名】{{ v.real_name }}</div>
+            </td>
+            <td>{{ v.phone }}</td>
+            <td>{{ v.role.name }}</td>
+            <td class="multiple-rows">
+                <div class="row">【超级管理员】<b :class="v.is_root == 'y' ? 'green' : 'red'">{{ v.is_root_explain }}</b></div>
+            </td>
+            <td>{{ v.create_time }}</td>
+            <td class="multiple-rows">
+                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id})">编辑</a></div>
+                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="function">
+    <span class="text">全局操作：</span>
+    <button type="button" class="btn-1" @click="delSelectedEvent">删除选中项</button>
+</div>
+<div class="page">
+    <Page :total="data.total" :page-size="data.per_page" size="small" show-elevator show-total @on-change="pageEvent" />
+</div>
+{/block}
 
 {block name='script'}
 <script src="{$act_url}/js/list.js?version={$version}"></script>

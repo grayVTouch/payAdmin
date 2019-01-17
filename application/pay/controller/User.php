@@ -55,9 +55,33 @@ class User extends Controller
 
     }
 
-    // 用户列表
+    // 视图：用户列表
     public function listView()
     {
         return $this->fetch('list');
+    }
+
+    // 数据：列表
+    public function list()
+    {
+        $data = request()->post();
+        $data['uid']     = $data['uid'] ?? '';
+        $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'uid|desc';
+        $order = explode('|' , $data['order']);
+        $where = [];
+        if ($data['uid'] != '') {
+            $where[] = ['uid' , '=' , $data['uid']];
+        }
+        $res = MUser::with('role')
+            ->where($where)
+            ->order($order[0] , $order[1])
+            ->paginate()
+            ->each(function($v){
+                MUser::single($v);
+            });
+        return Misc::response('000' , '' , [
+            'data' => $res ,
+            'filter' => $data ,
+        ]);
     }
 }

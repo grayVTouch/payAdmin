@@ -17,14 +17,13 @@
             } ,
             type: '' ,
         } ,
-        created () {
-            this.initData();
-        } ,
 
         mounted () {
             this.dom.form = $(this.$refs.form);
             this.form.id = this.dom.form.data('id');
             this.type = this.dom.form.data('type');
+            // 初始化数据
+            this.initData();
         } ,
 
         methods: {
@@ -41,10 +40,7 @@
                             layer.msg(data.msg);
                             return ;
                         }
-                        let res = data.data;
-                        self.form.name = res.name;
-                        self.form.code = res.code;
-                        self.form.weight = res.weight;
+                        self.form = data.data;
                     }
                 });
             } ,

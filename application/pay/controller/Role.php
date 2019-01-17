@@ -36,8 +36,29 @@ class Role extends Controller
     // 角色列表
     public function list()
     {
-        $res = MRole::order('id' , 'desc')->paginate();
-        return Misc::response('000' , '' , $res);
+        $data = request()->post();
+        $data['id']     = $data['id'] ?? '';
+        $data['name'] = $data['module'] ?? '';
+        $data['code'] = $data['controller'] ?? '';
+        $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'id|desc';
+        $order = explode('|' , $data['order']);
+        $where = [];
+        if ($data['id'] != '') {
+            $where[] = ['id' , '=' , $data['id']];
+        }
+        if ($data['name'] != '') {
+            $where[] = ['name' , 'like' , "%{$data['name']}%"];
+        }
+        if ($data['code'] != '') {
+            $where[] = ['name' , '=' , $data['code']];
+        }
+        $res = MRole::where($where)
+            ->order($order[0] , $order[1])
+            ->paginate();
+        return Misc::response('000' , '' , [
+            'data' => $res ,
+            'filter' => $data
+        ]);
     }
 
     // 视图：编辑角色

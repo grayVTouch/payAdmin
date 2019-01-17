@@ -8,6 +8,64 @@
 {/block}
 
 {block name='con'}
+<form @submit.prevent="initData" @reset.prevent="reset" class="search">
+    <div class="line">
+        <div class="component-title">
+            <div class="left">筛选</div>
+            <div class="right"></div>
+        </div>
+        <div class="filter-options">
+            <div class="option">
+                <div class="field">ID：</div>
+                <div class="value"><input type="number" v-model="form.id" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">名称：</div>
+                <div class="value"><input type="text" v-model="form.name" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field">code：</div>
+                <div class="value"><input type="text" v-model="form.code" class="form-text"></div>
+            </div>
+
+            <div class="option">
+                <div class="field"></div>
+                <div class="value">
+                    <button type="submit" class="btn-1">提交</button>
+                    <button type="reset" class="btn-1">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line">
+        <div class="component-title">
+            <div class="left">排序</div>
+            <div class="right"></div>
+        </div>
+        <div class="filter-options">
+            <div class="option" v-for="v in order" :key="v.name">
+                <div class="field">{{ v.name }}：</div>
+                <div class="value">
+                    <radio-group v-model="form.order">
+                        <radio v-for="(v1,k1) in v.order" :label="k1" :key="k1">
+                            <span>{{ v1 }}</span>
+                        </radio>
+                    </radio-group>
+                </div>
+            </div>
+
+            <div class="option">
+                <div class="field"></div>
+                <div class="value">
+                    <button type="submit" class="btn-1">提交</button>
+                    <button type="reset" class="btn-1">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="list">
     <div class="component-title">
         <div class="left">数据列表</div>

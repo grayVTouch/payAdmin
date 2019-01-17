@@ -21,7 +21,7 @@ window.topContext = {
         bool: {
             y: '是' ,
             n: '否'
-        }
+        } ,
     } ,
     path: {
         // 插件路径
