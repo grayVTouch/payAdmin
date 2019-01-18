@@ -236,5 +236,91 @@ topContext.mixin = {
      * 通用功能：表单
      * *********************
      */
+    form: {
+        field: {
+            type: '' ,
+            form: {
+                id: null
+            } ,
+            dataUrl: '' ,
+            saveUrl: '' ,
+            // 下一个
+            next: {
+                url: '' ,
+                text: '' ,
+            }
+        } ,
+        get: {
+            methods: {
+                // 获取数据
+                initData () {
+                    if (this.type != 'edit') {
+                        return ;
+                    }
+                    let self = this;
+                    $.post({
+                        url: this.dataUrl ,
+                        success (data) {
+                            if (data.code != '000') {
+                                layer.msg(data.msg);
+                                return ;
+                            }
+                            self.form = data.data;
+                        }
+                    });
+                } ,
 
+            }
+        } ,
+        init: {
+            mounted () {
+                this.form.id = this.$store.state.route.query.id;
+                this.type    = this.$store.state.route.query.type;
+            } ,
+        } ,
+        submit: {
+            methods: {
+                // 数据提交
+                submit (resolve) {
+                    let res = this.check();
+                    if (!res.status) {
+                        this.error[res.field] = res.msg;
+                        vScroll(res.field);
+                        return ;
+                    }
+                    topContext.ins.load.show();
+                    let self = this;
+                    $.post({
+                        url: this.saveUrl ,
+                        data: this.form ,
+                        success (data) {
+                            topContext.ins.load.hide();
+                            if (data.code == '001') {
+                                self.error = data.data;
+                                vScroll(firstKey(data.data));
+                                return ;
+                            }
+                            if (data.code == '002') {
+                                self.layerFail(data.msg);
+                                return ;
+                            }
+                            if (G.isFunction(resolve)) {
+                                resolve(data);
+                                return
+                            }
+                            self.layerSucc(data.msg , {
+                                btn: [self.next.text , '继续操作'] ,
+                                btn1 () {
+                                    window.location.href = self.next.url;
+                                } ,
+                                btn2 () {
+                                    layer.closeAll();
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        }
+    }
 };

@@ -8,7 +8,7 @@
 {/block}
 
 {block name='con'}
-<form @submit="submit" ref="form" data-id="{$id ?? ''}" data-type="{$type}">
+<form @submit.prevent="submit">
     <table class="input-tb">
         <tbody>
         <tr :class="errorClass(error.name)">

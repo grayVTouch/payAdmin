@@ -75,18 +75,13 @@ class Route extends Controller
     // 视图：编辑角色
     public function editView()
     {
-        return $this->fetch('route' , [
-            'id' => input('id') ,
-            'type' => 'edit'
-        ]);
+        return $this->fetch('route');
     }
 
     // 视图：添加角色
     public function addView()
     {
-        return $this->fetch('route' , [
-            'type' => 'add'
-        ]);
+        return $this->fetch('route');
     }
 
     // 获取单条记录

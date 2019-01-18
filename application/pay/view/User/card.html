@@ -1,0 +1,97 @@
+{extend name='Public::public' /}
+
+{block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/form/input.css">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css">
+<link rel="stylesheet" href="{$plugin_url}/UploadImage/css/UploadImage.css">
+<link rel="stylesheet" href="{$act_url}/css/role.css">
+{/block}
+
+{block name='con'}
+<form @submit.prevent="submit">
+    <table class="input-tb">
+        <tbody>
+        <tr :class="errorClass(error.bank_name)" id="bank_name">
+            <td>名称</td>
+            <td>
+                <input type="text" v-model="form.bank_name" class="form-text" @input="error.bank_name = ''">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.bank_name }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.bank_code)" id="bank_code">
+            <td>code</td>
+            <td>
+                <input type="text" v-model="form.bank_code" @input="error.bank_code = ''" class="form-text">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.bank_code }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.color)" id="color">
+            <td>颜色</td>
+            <td>
+                <input type="text" v-model="form.color" @input="error.color = ''" class="form-text">
+                <span class="necessary hide">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.color }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>logo</td>
+            <td>
+                <div class="image-container" ref="logo">
+                    <!-- 上传图片组件 -->
+                    <div class='upload-image'>
+                        <div class='select-images'>
+                            <div class="upload-show">
+                                <div class="image-line"><img src="" class="image upload-image-btn" /><span class="selected-count hide">10</span></div>
+                                <div class="text-line">请选择要上传的图片</div>
+                                <div class="clear-selected" title="清空已选择的图片"><img src="" class="image" /></div>
+                                <input type='file' name='upload_images' class='upload-images-input'  />
+                            </div>
+                            <div class="tip"></div>
+                        </div>
+                        <!-- 预置显示图片 -->
+                        <div class="init-show-image-list">
+                            <img :src="form.logo" class="init-show-image" v-if="form.logo" />
+                        </div>
+                        <div class='preview-images hide'></div>
+                        <!-- 待上传列表 -->
+                        <div class="upload-image-list hide">
+                            <div class="upload-title">待上传列表</div>
+                            <div class="image-list">
+                                <div class="list-content list-title">
+                                    <div class="item div-preview">图片预览</div>
+                                    <div class="item div-type">类型</div>
+                                    <div class="item div-size">大小</div>
+                                    <div class="item div-speed">速度</div>
+                                    <div class="item div-status">状态</div>
+                                    <div class="item div-opr">操作</div>
+                                </div>
+                                <div class="list-content list-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="necessary hide">*</span>
+                <span class="tip"></span>
+                <span class="msg"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="btn-2">提交</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{/block}
+
+{block name='script'}
+<script src="{$plugin_url}/UploadImage/js/UploadImage.js?version={$version}"></script>
+<script src="{$act_url}/js/bank.js?version={$version}"></script>
+{/block}

@@ -15,8 +15,49 @@
             topContext ,
             // 上传文件的名称
             image: 'image' ,
+            route: {
+                // 完整 url
+                url: '' ,
+                // host
+                host: '' ,
+                // 端口
+                port: '' ,
+                // 网络路径
+                path: '' ,
+                // 查询字符串
+                search: '' ,
+                // hash
+                hash: '' ,
+                // 查询字符串
+                query: {} ,
+                // mvc
+                mvc: {
+                    module: '' ,
+                    controller: '' ,
+                    action: ''
+                }
+            } ,
         }
     });
+
+    // 查询字符串解析
+    (function(){
+        store.state.route.url = window.location.href;
+        store.state.route.host = window.location.host;
+        store.state.route.port = window.location.port;
+        store.state.route.path = window.location.pathname;
+        store.state.route.search = window.location.search;
+        store.state.route.hash = window.location.hash;
+        store.state.route.query = G.queryString();
+
+        let mvc = store.state.route.path.substr(1).split('/');
+        store.state.route.mvc = {
+            module: mvc[0] ,
+            controller: mvc[1] ,
+            action: mvc[2]
+        };
+
+    })();
 
     // 全局混入对象
     Vue.mixin({
@@ -49,6 +90,11 @@
                 return layer.alert(msg , {
                     icon: 2
                 });
+            } ,
+
+            // url 解析
+            getRoute () {
+
             } ,
         }
     });

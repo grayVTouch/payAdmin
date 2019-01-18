@@ -64,22 +64,17 @@ class Role extends Controller
     // 视图：编辑角色
     public function editView()
     {
-        return $this->fetch('role' , [
-            'id' => input('id') ,
-            'type' => 'edit'
-        ]);
+        return $this->fetch('role');
     }
 
     // 视图：添加角色
     public function addView()
     {
-        return $this->fetch('role' , [
-            'type' => 'add'
-        ]);
+        return $this->fetch('role');
     }
 
     // 角色数据
-    public function role()
+    public function get()
     {
         $id = input('id');
         $res = MRole::where('id' , $id)->find();
@@ -208,4 +203,6 @@ class Role extends Controller
             throw $e;
         }
     }
+
+
 }

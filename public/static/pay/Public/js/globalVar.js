@@ -12,6 +12,7 @@ window.topContext = {
         body: $(document.body)
     } ,
     duration: 300 ,
+    short: 2 * 1000 ,
     ins: {
         // 全局实例
         load: new Loading($('#pub-load-container').get(0))

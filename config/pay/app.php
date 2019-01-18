@@ -23,4 +23,6 @@ return [
     'weight' => 0 ,
     // 图片保存路径
     'image_dir' => __DIR__ . '/../../public/uploads' ,
+    // 默认头像
+    'avatar' => '/static/image/avatar.jpg' ,
 ];

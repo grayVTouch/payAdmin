@@ -2,80 +2,45 @@
 /**
  * Created by PhpStorm.
  * User: grayVTouch
- * Date: 2019/1/10
- * Time: 14:14
+ * Date: 2019/1/12
+ * Time: 20:45
  */
 
-namespace app\pay\Controller;
+namespace app\pay\controller;
 
-use app\common\util\Hash;
-use app\pay\model\User as MUser;
-use app\pay\model\BankInfo;
+use Validate;
 use app\pay\util\Misc;
-use app\pay\util\User as UUser;
+use app\pay\model\BankCode;
 
 
-class User extends Controller
+class Bank extends Controller
 {
-    // 注销
-    public function loginOut()
-    {
-        UUser::loginOut();
-        return Misc::response('000' , '注销成功');
-    }
-
-    // 视图：用户列表
+    // 视图：列表
     public function listView()
     {
         return $this->fetch('list');
     }
 
-    // 数据：列表
+    // 功能：列表
     public function list()
     {
         $data = request()->post();
-        $data['uid']     = $data['uid'] ?? '';
-        $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'uid|desc';
-        $order = explode('|' , $data['order']);
-        $where = [];
-        if ($data['uid'] != '') {
-            $where[] = ['uid' , '=' , $data['uid']];
-        }
-        $res = MUser::with('role')
-            ->where($where)
-            ->order($order[0] , $order[1])
-            ->paginate()
-            ->each(function($v){
-                MUser::single($v);
-            });
-        return Misc::response('000' , '' , [
-            'data' => $res ,
-            'filter' => $data ,
-        ]);
-    }
-
-
-
-    // 视图：列表
-    public function cardView()
-    {
-        return $this->fetch('cards');
-    }
-
-    // 功能：列表
-    public function card()
-    {
-        $data = request()->post();
         $data['id']     = $data['id'] ?? '';
+        $data['bank_name'] = $data['bank_name'] ?? '';
+        $data['bank_code'] = $data['bank_code'] ?? '';
         $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'id|desc';
         $order = explode('|' , $data['order']);
-        $where = [
-            ['uid' , '=' , Misc::user()->uid]
-        ];
+        $where = [];
         if ($data['id'] != '') {
             $where[] = ['id' , '=' , $data['id']];
         }
-        $res = BankInfo::where($where)
+        if ($data['bank_name'] != '') {
+            $where[] = ['bank_name' , 'like' , "%{$data['bank_name']}%"];
+        }
+        if ($data['bank_code'] != '') {
+            $where[] = ['bank_code' , 'like' , "%{$data['bank_code']}%"];
+        }
+        $res = BankCode::where($where)
             ->order($order[0] , $order[1])
             ->paginate();
         return Misc::response('000' , '' , [
@@ -85,27 +50,27 @@ class User extends Controller
     }
 
     // 视图：编辑
-    public function editCardView()
+    public function editView()
     {
-        return $this->fetch('card');
+        return $this->fetch('bank');
     }
 
     // 视图：添加
-    public function addCardView()
+    public function addView()
     {
-        return $this->fetch('card');
+        return $this->fetch('bank');
     }
 
     // 功能：数据
-    public function getCard()
+    public function get()
     {
         $id = input('id');
-        $res = BankInfo::where('id' , $id)->find();
+        $res = BankCode::where('id' , $id)->find();
         return Misc::response('000' , '' , $res);
     }
 
     // 功能：添加
-    public function addCard()
+    public function add()
     {
         $data = request()->post();
         $validator = Validate::make([
@@ -118,7 +83,7 @@ class User extends Controller
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
-        $m = new BankInfo();
+        $m = new BankCode();
         $m->allowField([
             'bank_name' ,
             'bank_code' ,
@@ -128,7 +93,7 @@ class User extends Controller
     }
 
     // 功能：编辑
-    public function editCard()
+    public function edit()
     {
         $data = request()->post();
         $data['id'] = $data['id'] ?? '';
@@ -145,7 +110,7 @@ class User extends Controller
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
-        $m = new BankInfo();
+        $m = new BankCode();
         $m->allowField([
             'bank_name' ,
             'bank_code' ,
@@ -156,15 +121,36 @@ class User extends Controller
         return Misc::response('000' , '操作成功' , $m->id);
     }
 
+    // 功能：保存图片
+    public function saveImage()
+    {
+        $data = request()->post();
+        $validator = Validate::make([
+            'id' => 'require' ,
+            'image' => 'require'
+        ] , [
+            'id.require' => '路由id尚未提供' ,
+            'image.require' => '图片尚未提供'
+        ]);
+        if (!$validator->check($data)) {
+            return Misc::response('002' , $validator->getError());
+        }
+        // 保存到数据库
+        BankCode::where('id' , $data['id'])->update([
+            'logo' => $data['image']
+        ]);
+        return Misc::response('000' , '操作成功');
+    }
+
     // 功能：删除
-    public function delCard()
+    public function del()
     {
         $id_list = request()->post('id_list');
         $id_list = empty($id_list) ? [] : json_decode($id_list , true);
         if (empty($id_list)) {
             return Misc::response('002' , '请提供待删除项');
         }
-        $res = BankInfo::whereIn('id' , $id_list)->delete();
+        $res = BankCode::whereIn('id' , $id_list)->delete();
         return Misc::response('000' , '操作成功' , $res);
     }
 }

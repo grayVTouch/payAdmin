@@ -7,7 +7,7 @@
 {/block}
 
 {block name='con'}
-<form @submit="submit" ref="form" data-id="{$id ?? ''}" data-type="{$type}">
+<form @submit.prevent="submit">
     <table class="input-tb">
         <tbody>
         <tr :class="errorClass(error.name)" id="name">
@@ -33,7 +33,7 @@
             <td>
                 <input type="number" v-model="form.weight" step='0' @input="error.weight = ''" class="form-text">
                 <span class="necessary hide">*</span>
-                <span class="tip">默认：{{ form.weight }}</span>
+                <span class="tip">默认：0</span>
                 <span class="msg">{{ error.weight }}</span>
             </td>
         </tr>

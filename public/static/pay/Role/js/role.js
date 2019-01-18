@@ -4,7 +4,13 @@
      topContext.vue.btmForDocRight = new Vue({
         el: '#pub-btm' ,
         data: {
-            dom: {} ,
+            dataUrl: '' ,
+            saveUrl: '' ,
+            next: {
+                url: genUrl('Role' , 'listView') ,
+                text: '角色列表' ,
+            } ,
+
             form: {
                 id: null ,
                 name: '' ,
@@ -15,36 +21,21 @@
             error: {
 
             } ,
-            type: '' ,
         } ,
-
+        mixins: [
+            topContext.mixin.form.field ,
+            topContext.mixin.form.get ,
+            topContext.mixin.form.init ,
+            topContext.mixin.form.submit ,
+        ] ,
         mounted () {
-            this.dom.form = $(this.$refs.form);
-            this.form.id = this.dom.form.data('id');
-            this.type = this.dom.form.data('type');
+
+            this.dataUrl = genUrl(this.$store.state.route.mvc.controller , 'get' , {id: this.form.id});
+            this.saveUrl = this.genUrl(this.$store.state.route.mvc.controller , this.type , {id: this.form.id});
             // 初始化数据
             this.initData();
         } ,
-
         methods: {
-            // 获取数据
-            initData () {
-                if (this.type != 'edit') {
-                    return ;
-                }
-                let self = this;
-                $.post({
-                    url: this.genUrl('Role' , 'role' , {id: this.form.id}) ,
-                    success (data) {
-                        if (data.code != '000') {
-                            layer.msg(data.msg);
-                            return ;
-                        }
-                        self.form = data.data;
-                    }
-                });
-            } ,
-
             check () {
                 return {
                     status: true ,
@@ -52,49 +43,6 @@
                     msg: ''
                 };
             } ,
-
-            test (val) {
-                console.log('test');
-                return G.isUndefined(val) || val == '' ? '' : 'error';
-            } ,
-
-            // 数据提交
-            submit (e) {
-                e.preventDefault();
-                let res = this.check();
-                if (!res.status) {
-                    this.error[res.field] = res.msg;
-                    toAnchorLink(res.field);
-                    return ;
-                }
-                topContext.ins.load.show();
-                let self = this;
-                $.post({
-                    url: this.genUrl('Role' , this.type , {id: this.form.id}) ,
-                    data: this.form ,
-                    success (data) {
-                        topContext.ins.load.hide();
-                        if (data.code == '001') {
-                            self.error = data.data;
-                            vScroll(firstKey(data.data));
-                            return ;
-                        }
-                        if (data.code == '002') {
-                            self.layerFail(data.msg);
-                            return ;
-                        }
-                        self.layerSucc(data.msg , {
-                            btn: ['角色列表' , '继续操作'] ,
-                            btn1 () {
-                                window.location.href = genUrl('Role' , 'listView');
-                            } ,
-                            btn2 () {
-                                layer.closeAll();
-                            }
-                        });
-                    }
-                });
-            }
         } ,
 
         watch: {

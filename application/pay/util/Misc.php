@@ -125,4 +125,10 @@ class Misc
         }
         return '';
     }
+
+    // 默认头像
+    public static function avatar($avatar = '')
+    {
+        return empty($avatar) ? config('app.avatar') : $avatar;
+    }
 }

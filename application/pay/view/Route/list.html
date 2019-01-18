@@ -107,7 +107,7 @@
     <div class="component-title">
         <div class="left">数据列表</div>
         <div class="right">
-            <a :href="genUrl('Route' , 'addView')">添加</a>
+            <a :href="genUrl('Route' , 'addView' , {type: 'add'})">添加</a>
         </div>
     </div>
     <table class="line-tb">
@@ -148,7 +148,7 @@
             <td>{{ v.weight }}</td>
             <td>{{ v.create_time }}</td>
             <td class="multiple-rows">
-                <div class="row"><a class="btn-1" :href="genUrl('Route' , 'editView' , {id: v.id})">编辑</a></div>
+                <div class="row"><a class="btn-1" :href="genUrl('Route' , 'editView' , {id: v.id,type:'edit'})">编辑</a></div>
                 <div class="row"><button type="button" class="btn-1" @click.stop="delEvent(v.id)">删除</button></div>
             </td>
         </tr>

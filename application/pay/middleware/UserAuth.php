@@ -19,7 +19,6 @@ class UserAuth
     // 排除认证的 uri
     private $exclude = [
         'pay/Login/login' ,
-        'pay/User/add'
     ];
 
     // 已登录用户禁止访问的页面，统一重定向

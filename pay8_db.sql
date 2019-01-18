@@ -3,15 +3,15 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 80012
+ Source Server Version : 80013
  Source Host           : localhost:3306
  Source Schema         : pay8_db
 
  Target Server Type    : MySQL
- Target Server Version : 80012
+ Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 13/01/2019 18:52:29
+ Date: 18/01/2019 10:21:06
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `cl_bank_info`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`uid`) USING BTREE,
   INDEX `cardindex`(`card_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 219137 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'bankBranch_Name' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 219138 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'bankBranch_Name' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_bank_info
@@ -159,7 +159,7 @@ CREATE TABLE `cl_menu`  (
   `p_id` int(11) NULL DEFAULT 0,
   `sort` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_menu
@@ -194,9 +194,11 @@ CREATE TABLE `cl_role`  (
 -- ----------------------------
 -- Records of cl_role
 -- ----------------------------
-INSERT INTO `cl_role` VALUES (1, '管理员', '100', 0, '2019-01-13 10:37:38');
-INSERT INTO `cl_role` VALUES (2, '代理', '110', 0, '2019-01-13 10:37:38');
-INSERT INTO `cl_role` VALUES (3, '商户', '120', 0, '2019-01-13 10:37:38');
+INSERT INTO `cl_role` VALUES (1, '管理员', '100', 0, '2019-01-16 15:21:45');
+INSERT INTO `cl_role` VALUES (2, '代理', '110', 0, '2019-01-16 15:21:45');
+INSERT INTO `cl_role` VALUES (3, '商户', '120', 0, '2019-01-16 15:21:45');
+INSERT INTO `cl_role` VALUES (4, 'PHP', '1000', 0, '2019-01-17 17:12:48');
+INSERT INTO `cl_role` VALUES (5, '高级PHP', '1001', 0, '2019-01-17 17:12:58');
 
 -- ----------------------------
 -- Table structure for cl_role_permission
@@ -207,17 +209,17 @@ CREATE TABLE `cl_role_permission`  (
   `role_id` int(11) NULL DEFAULT NULL COMMENT 'cl_role.id',
   `route_id` int(11) NULL DEFAULT NULL COMMENT 'cl_route.id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色权限表 by cxl' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色权限表 by cxl' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cl_role_permission
 -- ----------------------------
-INSERT INTO `cl_role_permission` VALUES (1, 1, 1);
-INSERT INTO `cl_role_permission` VALUES (2, 1, 2);
-INSERT INTO `cl_role_permission` VALUES (3, 1, 3);
-INSERT INTO `cl_role_permission` VALUES (4, 1, 4);
-INSERT INTO `cl_role_permission` VALUES (5, 1, 5);
-INSERT INTO `cl_role_permission` VALUES (6, 1, 6);
+INSERT INTO `cl_role_permission` VALUES (15, 1, 3);
+INSERT INTO `cl_role_permission` VALUES (16, 1, 4);
+INSERT INTO `cl_role_permission` VALUES (17, 1, 5);
+INSERT INTO `cl_role_permission` VALUES (18, 1, 1);
+INSERT INTO `cl_role_permission` VALUES (19, 1, 11);
+INSERT INTO `cl_role_permission` VALUES (20, 1, 2);
 
 -- ----------------------------
 -- Table structure for cl_route
@@ -239,17 +241,23 @@ CREATE TABLE `cl_route`  (
   `p_id` int(11) NULL DEFAULT 0 COMMENT 'cl_route.id',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '路由表 by cxl' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '路由表 by cxl' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cl_route
 -- ----------------------------
-INSERT INTO `cl_route` VALUES (1, '用户管理', 'User Manager', NULL, NULL, NULL, 'y', 'y', 'ios-paper', NULL, NULL, 0, 0, '2019-01-13 10:37:38');
-INSERT INTO `cl_route` VALUES (2, '用户列表', NULL, 'pay', 'User', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 1, '2019-01-13 10:37:38');
-INSERT INTO `cl_route` VALUES (3, '权限管理', 'Permission Manager', NULL, NULL, NULL, 'y', 'y', 'ios-lock', NULL, NULL, 0, 0, '2019-01-13 10:37:38');
-INSERT INTO `cl_route` VALUES (4, '角色列表', NULL, 'pay', 'Role', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-13 10:37:38');
-INSERT INTO `cl_route` VALUES (5, '路由列表', NULL, 'pay', 'Route', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-13 10:37:38');
-INSERT INTO `cl_route` VALUES (6, '角色权限', NULL, 'pay', 'Role', 'perm', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-13 10:37:38');
+INSERT INTO `cl_route` VALUES (1, '用户管理', 'User Manager', NULL, NULL, NULL, 'y', 'y', 'ios-paper', NULL, NULL, 0, 0, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (2, '用户列表', NULL, 'pay', 'User', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 1, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (3, '权限管理', 'Permission Manager', NULL, NULL, NULL, 'y', 'y', 'ios-lock', NULL, NULL, 0, 0, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (4, '角色列表', NULL, 'pay', 'Role', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (5, '路由列表', NULL, 'pay', 'Route', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (6, '角色权限', NULL, 'pay', 'Role', 'permView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 4, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (7, '编辑角色', NULL, 'pay', 'Role', 'editView', 'n', 'y', '', NULL, NULL, 0, 4, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (8, '添加角色', NULL, 'pay', 'Role', 'addView', 'n', 'y', '', NULL, NULL, 0, 4, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (9, '删除角色', NULL, 'pay', 'Role', 'del', 'n', 'y', '', NULL, NULL, 0, 4, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (10, '编辑路由', NULL, 'pay', 'Route', 'editView', 'n', 'y', '', NULL, NULL, 0, 5, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (11, '添加路由', NULL, 'pay', 'Route', 'addView', 'n', 'y', '', NULL, NULL, 0, 5, '2019-01-16 15:21:45');
+INSERT INTO `cl_route` VALUES (12, '删除路由', NULL, 'pay', 'Route', 'del', 'n', 'y', '', NULL, NULL, 0, 5, '2019-01-16 15:21:45');
 
 -- ----------------------------
 -- Table structure for cl_test
@@ -294,14 +302,16 @@ CREATE TABLE `cl_user`  (
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_login` int(11) NULL DEFAULT 0 COMMENT '最后登录时间',
   `is_root` enum('y','n') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'n' COMMENT '是否超级管理员：y-是 n-否',
+  `username` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `avatar` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   PRIMARY KEY (`uid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 361240833 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_user
 -- ----------------------------
-INSERT INTO `cl_user` VALUES (361240796, '15806020008', '', '', '中年', '李俊峰', 2, '350321198506101517', 0, '0000-00-00 00:00:00', 3, '2,3,361240796', 0, 1, NULL, '5474c1c732265', 100000, 6, 7.44, 7.44, 'a72cc9ced95adcye', NULL, 1545904848, 'n');
-INSERT INTO `cl_user` VALUES (361240832, '13375086826', '$2y$10$UGZzIgltCpr1QuodPd7q6u/qWz8smyq1RJD78hpjVs/gXaoDtZx8y', '', '', '', 0, '', 0, '2019-01-12 10:25:05', 0, '', 0, 1, 0, '', 0, 1, 0.00, 0.00, '', NULL, 0, 'y');
+INSERT INTO `cl_user` VALUES (361240796, '15806020008', '$2y$10$K8TduqgiUMNaeLHYLVjkDOUOfKMCRSHkIUurBe.Va1zeRnkZR5mEq', '', '中年', '李俊峰', 2, '350321198506101517', 0, '0000-00-00 00:00:00', 3, '2,3,361240796', 0, 1, NULL, '5474c1c732265', NULL, 1, 7.44, 7.44, 'a72cc9ced95adcye', NULL, 1545904848, 'n', NULL, NULL);
+INSERT INTO `cl_user` VALUES (361240832, '13375086826', '$2y$10$WBSL9K1HtichmK8nnPUUmu0DagQpkxLSQ3axzgqR.IH5io1pBm8Rm', '', '', '', 0, '', 0, '2019-01-11 10:40:53', 0, '', 0, 1, 0, '', 0, 1, 0.00, 0.00, '', NULL, 0, 'y', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for cl_user_income
@@ -318,7 +328,7 @@ CREATE TABLE `cl_user_income`  (
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `object_id` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 75 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_user_income
@@ -397,66 +407,6 @@ INSERT INTO `cl_user_income` VALUES (71, 2, 361240796, 298.00, 40.00, 2, 1545897
 INSERT INTO `cl_user_income` VALUES (72, 361240796, 361240796, 131.97, 0.24, 1, 1547000719, '2019-01-09 10:25:19', 533);
 INSERT INTO `cl_user_income` VALUES (73, 3, 361240796, 131.97, 0.07, 1, 1547000719, '2019-01-09 10:25:19', 533);
 INSERT INTO `cl_user_income` VALUES (74, 2, 361240796, 131.97, 0.04, 1, 1547000719, '2019-01-09 10:25:19', 533);
-
--- ----------------------------
--- Table structure for cl_user_permission
--- ----------------------------
-DROP TABLE IF EXISTS `cl_user_permission`;
-CREATE TABLE `cl_user_permission`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) NULL DEFAULT NULL COMMENT 'cl_role.id',
-  `route_id` int(11) NULL DEFAULT NULL COMMENT 'cl_route.id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色权限表 by cxl' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for cl_user_recharge
--- ----------------------------
-DROP TABLE IF EXISTS `cl_user_recharge`;
-CREATE TABLE `cl_user_recharge`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NULL DEFAULT 0,
-  `order_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '系统订单号',
-  `create_time` int(11) NULL DEFAULT 0,
-  `amount` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '金额',
-  `pay_amount` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '实际支付金额',
-  `pay_time` int(11) NULL DEFAULT 0 COMMENT '实际支付时间',
-  `pay_order_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '订单号，客户传过来的订单号',
-  `status` tinyint(4) NULL DEFAULT 0 COMMENT '0:提交；1支付完成；',
-  `isdelete` tinyint(4) NULL DEFAULT 0 COMMENT '0:正常；1：删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of cl_user_recharge
--- ----------------------------
-INSERT INTO `cl_user_recharge` VALUES (75, 361240796, '经纪人', 1545888660, 2.98, 298.00, 1545896118, 'UP201812270131005575', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (76, 361240796, '经纪人', 1545889022, 2.98, 298.00, 1545896480, 'UP201812270137026645', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (77, 361240796, '经纪人', 1545889145, 2.98, 298.00, 1545896599, 'UP201812270139054635', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (78, 361240796, '经纪人', 1545889407, 2.98, 298.00, 1545896863, 'UP201812270143279261', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (79, 361240796, '经纪人', 1545889747, 2.98, 298.00, 1545897205, 'UP201812270149078849', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (80, 361240796, '经纪人', 1545889860, 2.98, 298.00, 1545897326, 'UP201812270151004535', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (81, 361240796, '经纪人', 1545890580, 2.98, 298.00, 1545896237, 'UP201812270203009786', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (82, 361240796, '经纪人', 1545890654, 2.98, 0.00, 0, 'UP201812270204142419', 0, 0);
-INSERT INTO `cl_user_recharge` VALUES (83, 361240796, '经纪人', 1545890661, 2.98, 298.00, 1545896318, 'UP201812270204219080', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (84, 361240796, '经纪人', 1545891436, 2.98, 298.00, 1545897091, 'UP201812270217165765', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (85, 361240796, '经纪人', 1545891644, 2.98, 298.00, 1545897299, 'UP201812270220449566', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (86, 361240796, '经纪人', 1545891739, 2.98, 298.00, 1545895593, 'UP201812270222195447', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (87, 361240796, '经纪人', 1545891840, 2.98, 298.00, 1545895696, 'UP201812270224002101', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (88, 361240796, '经纪人', 1545891876, 2.98, 298.00, 1545895731, 'UP201812270224369822', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (89, 361240796, '经纪人', 1545892098, 2.98, 298.00, 1545895954, 'UP201812270228188019', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (90, 361240796, '经纪人', 1545892771, 2.98, 298.00, 1545896624, 'UP201812270239316042', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (91, 361240796, '经纪人', 1545892822, 2.98, 298.00, 1545896676, 'UP201812270240229997', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (92, 361240796, '经纪人', 1545893405, 2.98, 298.00, 1545897257, 'UP201812270250055938', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (93, 361240796, '经纪人', 1545895426, 2.98, 298.00, 1545895676, 'UP201812270323462633', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (94, 361240796, '经纪人', 1545895551, 2.98, 298.00, 1545895559, 'UP201812270325513824', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (95, 361240796, '服务商', 1545896205, 2980.00, 2980.00, 1545896213, 'UP201812270336454108', 2, 0);
-INSERT INTO `cl_user_recharge` VALUES (96, 361240796, '经纪人', 1545904542, 298.00, 0.00, 0, 'UP201812270555424395', 0, 0);
-INSERT INTO `cl_user_recharge` VALUES (97, 361240796, '经纪人', 1545904882, 298.00, 0.00, 0, 'UP201812270601225217', 0, 0);
-INSERT INTO `cl_user_recharge` VALUES (98, 361240796, '服务商', 1545904919, 2980.00, 0.00, 0, 'UP201812270601596630', 0, 0);
-INSERT INTO `cl_user_recharge` VALUES (99, 361240796, '经纪人', 1546930527, 298.00, 0.00, 0, 'UP201901080255276035', 0, 0);
-INSERT INTO `cl_user_recharge` VALUES (100, 361240796, '经纪人', 1546930636, 298.00, 0.00, 0, 'UP201901080257161964', 0, 0);
-INSERT INTO `cl_user_recharge` VALUES (101, 361240802, '服务商', 1547099053, 2980.00, 0.00, 0, 'UP201901100144138486', 0, 0);
 
 -- ----------------------------
 -- Table structure for cl_user_session
@@ -3790,7 +3740,7 @@ CREATE TABLE `cl_user_withdraw`  (
   `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '说明文字，审核时写备注用',
   `update_time` int(11) NULL DEFAULT 0 COMMENT '最后修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
