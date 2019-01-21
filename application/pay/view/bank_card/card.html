@@ -1,0 +1,76 @@
+{extend name='public/public' /}
+
+{block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/form/input.css">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css">
+<link rel="stylesheet" href="{$act_url}/css/card.css">
+{/block}
+
+{block name='con'}
+<form @submit.prevent="submit">
+    <table class="input-tb">
+        <tbody>
+        <tr :class="errorClass(error.uid)" id="uid">
+            <td>用户ID</td>
+            <td>
+                <input type="number" v-model="form.uid" class="form-text" @input="error.uid = ''">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.uid }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.bank_code)" id="bank_code">
+            <td>请选择银行</td>
+            <td>
+                <i-select v-model="form.bank_code" style="width: 300px">
+                    <i-option v-for="v in code" :value="v.bank_code" :key="v.id">{{ v.bank_name }}</i-option>
+                </i-select>
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.bank_code }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.card_no)" id="card_no">
+            <td>卡号</td>
+            <td>
+                <input type="text" v-model="form.card_no" class="form-text" @input="error.card_no = ''">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.card_no }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.user_name)" id="user_name">
+            <td>名称</td>
+            <td>
+                <input type="text" v-model="form.user_name" class="form-text" @input="error.user_name = ''">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.user_name }}</span>
+            </td>
+        </tr>
+
+        <tr :class="errorClass(error.isdelete)" id="color">
+            <td>是否删除</td>
+            <td>
+                <radio-group v-model="form.isdelete">
+                    <radio v-for="(v,k) in $store.state.topContext.business.intBool" :key="k" :label="parseInt(k)">{{ v }}</radio>
+                </radio-group>
+                <span class="necessary hide">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.isdelete }}</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="btn-2">提交</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{/block}
+
+{block name='script'}
+<script src="{$act_url}/js/card.js?version={$version}"></script>
+{/block}

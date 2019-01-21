@@ -103,7 +103,7 @@ class Misc
     {
         $str = str_replace('*' , '.*' , $str);
         $str = str_replace('/' , '\/' , $str);
-        return sprintf('/%s/i' , $str);
+        return sprintf('/^%s$/i' , $str);
     }
 
     // 生成网络路径

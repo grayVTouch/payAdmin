@@ -10,6 +10,7 @@ namespace app\pay\model;
 
 use think\Model as BaseModel;
 use think\Model\Collection;
+use app\pay\util\Misc;
 
 class BankInfo extends BaseModel implements Model
 {
@@ -19,6 +20,8 @@ class BankInfo extends BaseModel implements Model
         if (is_null($m)) {
             return ;
         }
+        // 是否删除
+        $m->isdelete_explain = Misc::mapVal('business.int_bool' , $m->isdelete);
     }
 
     // 多条：数据处理

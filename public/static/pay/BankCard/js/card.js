@@ -7,8 +7,8 @@
             dataUrl: '' ,
             saveUrl: '' ,
             next: {
-                url: genUrl('User' , 'cardView') ,
-                text: '银行卡列表' ,
+                url: '' ,
+                text: '' ,
             } ,
 
             form: {
@@ -35,8 +35,10 @@
             this.getCode();
         } ,
         mounted () {
-            this.dataUrl = genUrl(this.$store.state.route.mvc.controller , 'getCard' , {id: this.form.id});
-            this.saveUrl = genUrl(this.$store.state.route.mvc.controller , this.type == 'add' ? 'addCard' : 'editCard' , {id: this.form.id});
+            this.next.url = genUrl(this.$store.state.route.mvc.controller , 'listView');
+            this.next.text = '银行卡列表';
+            this.dataUrl = genUrl(this.$store.state.route.mvc.controller , 'get' , {id: this.form.id});
+            this.saveUrl = genUrl(this.$store.state.route.mvc.controller , this.type , {id: this.form.id});
             // 初始化数据
             this.initData();
         } ,

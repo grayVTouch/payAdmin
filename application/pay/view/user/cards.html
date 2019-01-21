@@ -1,10 +1,10 @@
-{extend name='Public::public' /}
+{extend name='public/public' /}
 
 {block name='link'}
 <link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
 <link rel="stylesheet" href="{$plugin_url}/css/form/filter.css?version={$version}">
 <link rel="stylesheet" href="{$pub_url}/css/list.css?version={$version}">
-<link rel="stylesheet" href="{$act_url}/css/list.css?version={$version}">
+<link rel="stylesheet" href="{$act_url}/css/cards.css?version={$version}">
 {/block}
 
 {block name='con'}
@@ -19,17 +19,6 @@
                 <div class="field">ID：</div>
                 <div class="value"><input type="number" v-model="form.id" class="form-text"></div>
             </div>
-
-            <div class="option">
-                <div class="field">名称：</div>
-                <div class="value"><input type="text" v-model="form.bank_name" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">code：</div>
-                <div class="value"><input type="text" v-model="form.bank_code" class="form-text"></div>
-            </div>
-
             <div class="option">
                 <div class="field"></div>
                 <div class="value">
@@ -55,7 +44,6 @@
                     </radio-group>
                 </div>
             </div>
-
             <div class="option">
                 <div class="field"></div>
                 <div class="value">
@@ -70,7 +58,7 @@
     <div class="component-title">
         <div class="left">数据列表</div>
         <div class="right">
-            <a :href="genUrl($store.state.route.mvc.controller , 'addView' , {type: 'add'})">添加</a>
+            <a :href="genUrl($store.state.route.mvc.controller , 'addCardView' , {type: 'add'})">添加</a>
         </div>
     </div>
     <table class="line-tb">
@@ -78,10 +66,10 @@
         <tr>
             <th class="th-cbox"><input type="checkbox" @click="selectedAllEvent"></th>
             <th class="th-id">id</th>
-            <th class="th-name">名称</th>
-            <th class="th-number">code</th>
-            <th class="th-number">颜色</th>
-            <th class="th-number">logo</th>
+            <th class="th-name">银行</th>
+            <th class="th-name">code</th>
+            <th class="th-status">状态</th>
+            <th class="th-time">创建时间</th>
             <th class="th-opr">操作</th>
         </tr>
         </thead>
@@ -89,14 +77,23 @@
         <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
             <td><input type="checkbox" class="c-box"></td>
             <td>{{ v.id }}</td>
-            <td>{{ v.bank_name }}</td>
+            <td class="multiple-rows">
+                <div class="row">【用户名】<b :title="v.user_name">{{ v.user_name }}</b></div>
+                <div class="row">【卡号】<b :title="v.card_no">{{ v.card_no }}</b></div>
+                <div class="row">【银行名称】<b :title="v.bank_name">{{ v.bank_name }}</b></div>
+            </td>
             <td>{{ v.bank_code }}</td>
-            <td>{{ v.color }}</td>
-            <td><img :src="v.logo" class="image"></td>
+            <td class="multiple-rows">
+                <div class="row">【是否删除】<b :class="v.isdelete == 0 ? 'green' : 'red'">{{ v.isdelete_explain }}</b></div>
+            </td>
+            <td>{{ v.create_time }}</td>
             <td>
-                <a class="btn-1" :href="genUrl($store.state.route.mvc.controller , 'editView' , {id: v.id , type: 'edit'})">编辑</a>
+                <a class="btn-1" :href="genUrl($store.state.route.mvc.controller , 'editCardView' , {id: v.id , type: 'edit'})">编辑</a>
                 <button type="button" class="btn-1" @click="delEvent(v.id)">删除</button>
             </td>
+        </tr>
+        <tr v-if="data.data.length == 0">
+            <td colspan="7">无相关数据</td>
         </tr>
         </tbody>
     </table>
@@ -111,5 +108,5 @@
 {/block}
 
 {block name='script'}
-<script src="{$act_url}/js/list.js?version={$version}"></script>
+<script src="{$act_url}/js/cards.js?version={$version}"></script>
 {/block}

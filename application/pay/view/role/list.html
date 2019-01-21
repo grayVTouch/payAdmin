@@ -1,9 +1,7 @@
-
-{extend name='Public::public' /}
+{extend name='public/public' /}
 
 {block name='link'}
 <link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
-<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css?version={$version}">
 <link rel="stylesheet" href="{$plugin_url}/css/form/filter.css?version={$version}">
 <link rel="stylesheet" href="{$pub_url}/css/list.css?version={$version}">
 <link rel="stylesheet" href="{$act_url}/css/list.css?version={$version}">
@@ -28,43 +26,8 @@
             </div>
 
             <div class="option">
-                <div class="field">模块：</div>
-                <div class="value"><input type="text" v-model="form.module" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">控制器：</div>
-                <div class="value"><input type="text" v-model="form.controller" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">动作：</div>
-                <div class="value"><input type="text" v-model="form.action" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">上级ID：</div>
-                <div class="value"><input type="number" v-model="form.p_id" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">是否菜单：</div>
-                <div class="value">
-                    <radio-group v-model="form.is_menu">
-                        <radio v-for="(v,k) in $store.state.topContext.business.bool" :key="k" :label="k">{{ v }}</radio>
-                    </radio-group>
-                </div>
-            </div>
-
-            <div class="option">
-                <div class="field">是否启用：</div>
-                <div class="value">
-                    <radio-group v-model="form.enable">
-                        <radio v-for="(v,k) in $store.state.topContext.business.bool" :key="k" :label="k">
-                            <span>{{ v }}</span>
-                        </radio>
-                    </radio-group>
-                </div>
+                <div class="field">code：</div>
+                <div class="value"><input type="text" v-model="form.code" class="form-text"></div>
             </div>
 
             <div class="option">
@@ -107,7 +70,7 @@
     <div class="component-title">
         <div class="left">数据列表</div>
         <div class="right">
-            <a :href="genUrl('Route' , 'addView' , {type: 'add'})">添加</a>
+            <a :href="genUrl('Role' , 'addView' , {type: 'add'})">添加</a>
         </div>
     </div>
     <table class="line-tb">
@@ -116,8 +79,7 @@
             <th class="th-cbox"><input type="checkbox" @click="selectedAllEvent"></th>
             <th class="th-id">id</th>
             <th class="th-name">名称</th>
-            <th class="th-name">链接</th>
-            <th class="th-status">状态</th>
+            <th class="th-number">code</th>
             <th class="th-number">权重</th>
             <th class="th-time">创建时间</th>
             <th class="th-opr">操作</th>
@@ -126,30 +88,15 @@
         <tbody ref="tbody">
         <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
             <td><input type="checkbox" class="c-box"></td>
-            <td class="multiple-rows">
-                <div class="row">【id】<b>{{ v.id }}</b></div>
-                <div class="row">【上级ID】<b>{{ v.p_id }}</b></div>
-                <div class="row"><img :src="v.ico_for_big" class="image"></div>
-            </td>
-            <td class="multiple-rows">
-                <div class="row">【中文名】{{ v.name }}</div>
-                <div class="row">【英文名】{{ v.en }}</div>
-            </td>
-            <td class="multiple-rows">
-                <div class="row">【模块】{{ v.module }}</div>
-                <div class="row">【控制器】{{ v.controller }}</div>
-                <div class="row">【动作】{{ v.action }}</div>
-                <div class="row">【链接】{{ v.link }}</div>
-            </td>
-            <td class="multiple-rows">
-                <div class="row">【是否菜单】<b :class="v.is_menu == 'y' ? 'green' : 'red'">{{ v.is_menu_explain }}</b></div>
-                <div class="row">【是否启用】<b :class="v.enable == 'y' ? 'green' : 'red'">{{ v.enable_explain }}</b></div>
-            </td>
+            <td>{{ v.id }}</td>
+            <td>{{ v.name }}</td>
+            <td>{{ v.code }}</td>
             <td>{{ v.weight }}</td>
             <td>{{ v.create_time }}</td>
             <td class="multiple-rows">
-                <div class="row"><a class="btn-1" :href="genUrl('Route' , 'editView' , {id: v.id,type:'edit'})">编辑</a></div>
-                <div class="row"><button type="button" class="btn-1" @click.stop="delEvent(v.id)">删除</button></div>
+                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id , type: 'edit'})">编辑</a></div>
+                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'permView' , {id: v.id})">权限分配</a></div>
+                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
             </td>
         </tr>
         </tbody>

@@ -2,19 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: grayVTouch
- * Date: 2019/1/12
- * Time: 20:45
+ * Date: 2019/1/21
+ * Time: 13:38
  */
 
 namespace app\pay\controller;
 
 use Validate;
+
 use app\pay\util\Misc;
+use app\pay\model\BankInfo;
 use app\pay\model\BankCode;
 
-
-class Bank extends Controller
+class BankCard extends Controller
 {
+
     // 视图：列表
     public function listView()
     {
@@ -26,23 +28,20 @@ class Bank extends Controller
     {
         $data = request()->post();
         $data['id']     = $data['id'] ?? '';
-        $data['bank_name'] = $data['bank_name'] ?? '';
-        $data['bank_code'] = $data['bank_code'] ?? '';
         $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'id|desc';
         $order = explode('|' , $data['order']);
-        $where = [];
+        $where = [
+            ['uid' , '=' , Misc::user()->uid]
+        ];
         if ($data['id'] != '') {
             $where[] = ['id' , '=' , $data['id']];
         }
-        if ($data['bank_name'] != '') {
-            $where[] = ['bank_name' , 'like' , "%{$data['bank_name']}%"];
-        }
-        if ($data['bank_code'] != '') {
-            $where[] = ['bank_code' , 'like' , "%{$data['bank_code']}%"];
-        }
-        $res = BankCode::where($where)
+        $res = BankInfo::where($where)
             ->order($order[0] , $order[1])
-            ->paginate();
+            ->paginate()
+            ->each(function($m){
+                BankInfo::single($m);
+            });
         return Misc::response('000' , '' , [
             'data' => $res ,
             'filter' => $data
@@ -52,20 +51,20 @@ class Bank extends Controller
     // 视图：编辑
     public function editView()
     {
-        return $this->fetch('bank');
+        return $this->fetch('card');
     }
 
     // 视图：添加
     public function addView()
     {
-        return $this->fetch('bank');
+        return $this->fetch('card');
     }
 
     // 功能：数据
     public function get()
     {
         $id = input('id');
-        $res = BankCode::where('id' , $id)->find();
+        $res = BankInfo::where('id' , $id)->find();
         return Misc::response('000' , '' , $res);
     }
 
@@ -74,20 +73,32 @@ class Bank extends Controller
     {
         $data = request()->post();
         $validator = Validate::make([
-            'bank_name' => 'require' ,
+            'uid'       => 'require' ,
+            'card_no'   => 'require' ,
             'bank_code' => 'require' ,
+            'user_name' => 'require' ,
+            'isdelete'  => 'require' ,
         ] , [
-            'bank_name.require' => '银行名称尚未提供' ,
-            'bank_code.require' => '银行代码尚未提供'
+            'uid.require' => '用户id尚未提供' ,
+            'card_no.require' => '卡号尚未提供' ,
+            'bank_code.require' => '银行代码尚未提供' ,
+            'user_name.require' => '名称尚未提供' ,
+            'isdelete.require' => '是否删除尚未提供' ,
         ]);
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
-        $m = new BankCode();
+        $data['uid'] = Misc::user()->uid;
+        $bank_code = BankCode::where('bank_code' , $data['bank_code'])->find();
+        $data['bank_name'] = $bank_code->bank_name;
+        $m = new BankInfo();
         $m->allowField([
+            'uid' ,
             'bank_name' ,
             'bank_code' ,
-            'color'
+            'card_no' ,
+            'user_name' ,
+            'isdelete'
         ])->save($data);
         return Misc::response('000' , '操作成功' , $m->id);
     }
@@ -101,45 +112,35 @@ class Bank extends Controller
             return Misc::response('002' , 'id 尚未提供');
         }
         $validator = Validate::make([
-            'bank_name' => 'require' ,
+            'uid'       => 'require' ,
+            'card_no'   => 'require' ,
             'bank_code' => 'require' ,
+            'user_name' => 'require' ,
+            'isdelete'  => 'require' ,
         ] , [
-            'bank_name.require' => '银行名称尚未提供' ,
-            'bank_code.require' => '银行代码尚未提供'
+            'uid.require'       => '用户id尚未提供' ,
+            'bank_code.require' => '银行代码尚未提供' ,
+            'card_no.require'   => '卡号尚未提供' ,
+            'user_name.require' => '名称尚未提供' ,
+            'isdelete.require'  => '是否删除尚未提供'
         ]);
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
-        $m = new BankCode();
+        $bank_code = BankCode::where('bank_code' , $data['bank_code'])->find();
+        $data['bank_name'] = $bank_code->bank_name;
+        $m = new BankInfo();
         $m->allowField([
+            'uid' ,
             'bank_name' ,
             'bank_code' ,
-            'color'
+            'user_name' ,
+            'isdelete' ,
+            'card_no'
         ])->save($data , [
             'id' => $data['id']
         ]);
         return Misc::response('000' , '操作成功' , $m->id);
-    }
-
-    // 功能：保存图片
-    public function saveImage()
-    {
-        $data = request()->post();
-        $validator = Validate::make([
-            'id' => 'require' ,
-            'image' => 'require'
-        ] , [
-            'id.require' => '路由id尚未提供' ,
-            'image.require' => '图片尚未提供'
-        ]);
-        if (!$validator->check($data)) {
-            return Misc::response('002' , $validator->getError());
-        }
-        // 保存到数据库
-        BankCode::where('id' , $data['id'])->update([
-            'logo' => $data['image']
-        ]);
-        return Misc::response('000' , '操作成功');
     }
 
     // 功能：删除
@@ -150,15 +151,7 @@ class Bank extends Controller
         if (empty($id_list)) {
             return Misc::response('002' , '请提供待删除项');
         }
-        $res = BankCode::whereIn('id' , $id_list)->delete();
+        $res = BankInfo::whereIn('id' , $id_list)->delete();
         return Misc::response('000' , '操作成功' , $res);
-    }
-
-    // 功能：所有的银行
-    public function all()
-    {
-        $res = BankCode::select();
-        BankCode::multiple($res);
-        return Misc::response('000' , '' , $res);
     }
 }

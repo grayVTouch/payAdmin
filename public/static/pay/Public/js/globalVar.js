@@ -23,6 +23,10 @@ window.topContext = {
             y: '是' ,
             n: '否'
         } ,
+        intBool: {
+            0: '否' ,
+            1: '是'
+        }
     } ,
     path: {
         // 插件路径

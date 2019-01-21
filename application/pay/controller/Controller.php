@@ -6,7 +6,7 @@
  * Time: 14:12
  */
 
-namespace app\pay\Controller;
+namespace app\pay\controller;
 
 use Exception;
 use app\common\lib\Category;
@@ -27,7 +27,7 @@ class Controller extends BaseController
     // 排除的路由
     private $exclude = [
         '*Login*' ,
-        '*User/add'
+        '*User/add' ,
     ];
 
     public function __construct()
@@ -44,6 +44,7 @@ class Controller extends BaseController
         $this->shareVar();
         // 获取当前位置（需要排除的请在$exclude中指明）
         $this->pos();
+
         return parent::fetch($template , $vars , $config);
     }
 

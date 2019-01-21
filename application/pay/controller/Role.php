@@ -204,5 +204,11 @@ class Role extends Controller
         }
     }
 
-
+    // 功能：角色列表
+    public function all()
+    {
+        $res = MRole::select();
+        MRole::multiple($res);
+        return Misc::response('000' , '' , $res);
+    }
 }

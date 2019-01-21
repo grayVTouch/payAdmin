@@ -1,4 +1,4 @@
-{extend name='Public::public' /}
+{extend name='public/public' /}
 
 {block name='link'}
 <link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
@@ -22,12 +22,12 @@
 
             <div class="option">
                 <div class="field">名称：</div>
-                <div class="value"><input type="text" v-model="form.name" class="form-text"></div>
+                <div class="value"><input type="text" v-model="form.bank_name" class="form-text"></div>
             </div>
 
             <div class="option">
                 <div class="field">code：</div>
-                <div class="value"><input type="text" v-model="form.code" class="form-text"></div>
+                <div class="value"><input type="text" v-model="form.bank_code" class="form-text"></div>
             </div>
 
             <div class="option">
@@ -70,7 +70,7 @@
     <div class="component-title">
         <div class="left">数据列表</div>
         <div class="right">
-            <a :href="genUrl('Role' , 'addView' , {type: 'add'})">添加</a>
+            <a :href="genUrl($store.state.route.mvc.controller , 'addView' , {type: 'add'})">添加</a>
         </div>
     </div>
     <table class="line-tb">
@@ -80,8 +80,8 @@
             <th class="th-id">id</th>
             <th class="th-name">名称</th>
             <th class="th-number">code</th>
-            <th class="th-number">权重</th>
-            <th class="th-time">创建时间</th>
+            <th class="th-number">颜色</th>
+            <th class="th-number">logo</th>
             <th class="th-opr">操作</th>
         </tr>
         </thead>
@@ -89,14 +89,13 @@
         <tr v-for='v in data.data' :data-id="v.id" @click="selectedLineEvent" class="tr">
             <td><input type="checkbox" class="c-box"></td>
             <td>{{ v.id }}</td>
-            <td>{{ v.name }}</td>
-            <td>{{ v.code }}</td>
-            <td>{{ v.weight }}</td>
-            <td>{{ v.create_time }}</td>
-            <td class="multiple-rows">
-                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'editView' , {id: v.id , type: 'edit'})">编辑</a></div>
-                <div class="row"><a class="btn-1" :href="genUrl('Role' , 'permView' , {id: v.id})">权限分配</a></div>
-                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
+            <td>{{ v.bank_name }}</td>
+            <td>{{ v.bank_code }}</td>
+            <td>{{ v.color }}</td>
+            <td><img :src="v.logo" class="image"></td>
+            <td>
+                <a class="btn-1" :href="genUrl($store.state.route.mvc.controller , 'editView' , {id: v.id , type: 'edit'})">编辑</a>
+                <button type="button" class="btn-1" @click="delEvent(v.id)">删除</button>
             </td>
         </tr>
         </tbody>

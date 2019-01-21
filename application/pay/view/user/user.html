@@ -1,0 +1,158 @@
+{extend name='public/public' /}
+
+{block name='link'}
+<link rel="stylesheet" href="{$plugin_url}/css/form/input.css">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css">
+<link rel="stylesheet" href="{$plugin_url}/UploadImage/css/UploadImage.css">
+<link rel="stylesheet" href="{$act_url}/css/user.css">
+{/block}
+
+{block name='con'}
+<form @submit.prevent="submit">
+    <table class="input-tb">
+        <tbody>
+        <tr :class="errorClass(error.username)">
+            <td>用户名</td>
+            <td>
+                <input type="text" v-model="form.username" class="form-text" @input="error.username = ''">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.username }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.phone)">
+            <td>手机号</td>
+            <td>
+                <input type="text" v-model="form.phone" class="form-text" @input="error.phone = ''">
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.phone }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.password)">
+            <td>密码</td>
+            <td>
+                <input type="text" v-model="password" class="form-text" @input="error.password = ''">
+                <span class="necessary">*</span>
+                <span class="tip">不填写表示使用旧密码</span>
+                <span class="msg">{{ error.password }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.nick_name)">
+            <td>昵称</td>
+            <td>
+                <input type="text" v-model="form.nick_name" class="form-text" @input="error.nick_name = ''">
+                <span class="necessary hide">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.nick_name }}</span>
+            </td>
+        </tr>
+        <template v-if="type == 'edit'">
+            <tr :class="errorClass(error.mno)">
+                <td>商户号</td>
+                <td>
+                    <input type="text" v-model="form.mno" readonly="readonly" class="form-text" @input="error.mno = ''">
+                    <span class="necessary hide">*</span>
+                    <span class="tip"></span>
+                    <span class="msg">{{ error.mno }}</span>
+                </td>
+            </tr>
+            <tr :class="errorClass(error.key)">
+                <td>密钥</td>
+                <td>
+                    <input type="text" v-model="form.key" readonly="readonly" class="form-text" @input="error.key = ''">
+                    <span class="necessary hide">*</span>
+                    <span class="tip"></span>
+                    <span class="msg">{{ error.key }}</span>
+                </td>
+            </tr>
+        </template>
+        <tr :class="errorClass(error.enable)">
+            <td>是否启用</td>
+            <td>
+                <radio-group v-model="form.enable">
+                    <radio v-for="(v,k) in $store.state.topContext.business.intBool" :key="k" :label="parseInt(k)">{{ v }}</radio>
+                </radio-group>
+                <span class="necessary">*</span>
+                <span class="tip">默认：是</span>
+                <span class="msg">{{ error.enable }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.isdelete)">
+            <td>是否删除</td>
+            <td>
+                <radio-group v-model="form.isdelete">
+                    <radio v-for="(v,k) in $store.state.topContext.business.intBool" :key="k" :label="parseInt(k)">{{ v }}</radio>
+                </radio-group>
+                <span class="necessary">*</span>
+                <span class="tip">默认：否</span>
+                <span class="msg">{{ error.isdelete }}</span>
+            </td>
+        </tr>
+        <tr :class="errorClass(error.role)">
+            <td>角色</td>
+            <td>
+                <i-select v-model="form.role_id" style="width: 300px">
+                    <i-option v-for="v in role" :value="v.id" :key="v.id">{{ v.name }}</i-option>
+                </i-select>
+                <span class="necessary">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.role }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>用户头像</td>
+            <td>
+                <div class="image-container" ref="image">
+                    <!-- 上传图片组件 -->
+                    <div class='upload-image'>
+                        <div class='select-images'>
+                            <div class="upload-show">
+                                <div class="image-line"><img src="" class="image upload-image-btn" /><span class="selected-count hide">10</span></div>
+                                <div class="text-line">请选择要上传的图片</div>
+                                <div class="clear-selected" title="清空已选择的图片"><img src="" class="image" /></div>
+                                <input type='file' name='upload_images' class='upload-images-input'  />
+                            </div>
+                            <div class="tip"></div>
+                        </div>
+                        <!-- 预置显示图片 -->
+                        <div class="init-show-image-list">
+                            <img :src="form.avatar" class="init-show-image" v-if="form.avatar" />
+                        </div>
+                        <div class='preview-images hide'></div>
+                        <!-- 待上传列表 -->
+                        <div class="upload-image-list hide">
+                            <div class="upload-title">待上传列表</div>
+                            <div class="image-list">
+                                <div class="list-content list-title">
+                                    <div class="item div-preview">图片预览</div>
+                                    <div class="item div-type">类型</div>
+                                    <div class="item div-size">大小</div>
+                                    <div class="item div-speed">速度</div>
+                                    <div class="item div-status">状态</div>
+                                    <div class="item div-opr">操作</div>
+                                </div>
+                                <div class="list-content list-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="necessary hide">*</span>
+                <span class="tip"></span>
+                <span class="msg">{{ error.enable }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="btn-2">提交</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{/block}
+
+{block name='script'}
+<script src="{$plugin_url}/UploadImage/js/UploadImage.js?version={$version}"></script>
+<script src="{$act_url}/js/user.js?version={$version}"></script>
+{/block}
