@@ -17,4 +17,6 @@ class Misc extends Controller
     {
         return UMisc::response('000' , '' , session('pos'));
     }
+
+    // 登录用户一次行获取所有数据
 }

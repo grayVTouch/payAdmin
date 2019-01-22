@@ -15,13 +15,22 @@
     <form @submit="submit" data-id="{$id}" ref="form">
         <table class="input-tb">
             <tbody>
-            <tr>
+            <tr v-if="false">
+                <td>批量授权</td>
                 <td>
+                    <i-switch v-model="relation">
+                        <icon type="md-checkmark" slot="open"></icon>
+                        <icon type="md-close" slot="close"></icon>
+                    </i-switch>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
                     <tree :data="tree" show-checkbox multiple :check-strictly="relation" @on-select-change="selectItemForTree" @on-check-change="selectCheckboxForTree"></tree>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="2">
                     <button type="submit" class="btn-2">授权</button>
                 </td>
             </tr>

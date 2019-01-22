@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-     topContext.vue.btmForDocRight = new Vue({
+    topContext.vue.btmForDocRight = new Vue({
         el: '#pub-btm' ,
         data: {
             dataUrl: '' ,

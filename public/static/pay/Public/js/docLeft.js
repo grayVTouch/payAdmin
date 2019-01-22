@@ -4,9 +4,6 @@
     topContext.vue.docLeft = new Vue({
         el: '#doc-left' ,
         data: {
-            dom: {
-
-            } ,
             accordion: false ,
             menu: [] ,
             activeName: '' ,
@@ -21,7 +18,7 @@
         } ,
 
         mounted () {
-            this.dom.container = $(this.$refs.container);
+
         } ,
 
         methods: {

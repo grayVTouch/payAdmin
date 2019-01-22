@@ -2,6 +2,7 @@
 
 {block name='link'}
 <link rel="stylesheet" href="{$plugin_url}/css/table/line.css?version={$version}">
+<link rel="stylesheet" href="{$plugin_url}/css/form/ui.css?version={$version}">
 <link rel="stylesheet" href="{$plugin_url}/css/form/filter.css?version={$version}">
 <link rel="stylesheet" href="{$pub_url}/css/list.css?version={$version}">
 <link rel="stylesheet" href="{$act_url}/css/list.css?version={$version}">
@@ -17,17 +18,7 @@
         <div class="filter-options">
             <div class="option">
                 <div class="field">ID：</div>
-                <div class="value"><input type="number" v-model="form.id" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">名称：</div>
-                <div class="value"><input type="text" v-model="form.name" class="form-text"></div>
-            </div>
-
-            <div class="option">
-                <div class="field">code：</div>
-                <div class="value"><input type="text" v-model="form.code" class="form-text"></div>
+                <div class="value"><input type="number" v-model="form.uid" class="form-text"></div>
             </div>
 
             <div class="option">
@@ -107,7 +98,7 @@
             <td>{{ v.create_time }}</td>
             <td class="multiple-rows">
                 <div class="row"><a class="btn-1" :href="genUrl($store.state.route.mvc.controller , 'editView' , {uid: v.uid , type: 'edit'})">编辑</a></div>
-                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.id)">删除</button></div>
+                <div class="row"><button type="button" class="btn-1" @click="delEvent(v.uid)">删除</button></div>
             </td>
         </tr>
         </tbody>

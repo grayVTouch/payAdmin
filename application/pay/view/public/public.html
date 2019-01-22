@@ -25,12 +25,13 @@
 <div class="app">
     <div class="doc-left" id="doc-left" ref="container">
         <div class="top">
-            <div class="logo"><img src="{$res_url}/image/lovely.jpg" class="image"></div>
-            <div class="text">支付系统</div>
+            <div class="logo"><img src="{$logo}" class="image"></div>
+            <div class="text">{$app_name}</div>
         </div>
         <div class="mid">
             <div class="avatar">
-                <div class="image-for-container"><img src="{$res_url}/image/lovely.jpg" class="image"></div>
+                <!--<div class="image-for-container"><img src="" class="image"></div>-->
+                <div class="image-for-container"><img src="{$user->avatar_explain}" class="image"></div>
             </div>
             <div class="text">{$user->phone}</div>
         </div>
@@ -55,16 +56,12 @@
                     <div class="control">
                         <div class="c-left">
                             <div class="image-for-container">
-                                <img src="{$res_url}/image/lovely.jpg" class="image">
+                                <img src="{$user->avatar_explain}" class="image">
                             </div>
                         </div>
-                        <div class="c-right text">月舒</div>
+                        <div class="c-right text">{$user->nick_name}</div>
                     </div>
                     <div class="function hide" ref="pub-function">
-                        <div class="line">
-                            <div class="ico"><img src="{$pub_url}/image/power.png" class="image"></div>
-                            <div class="text">占位功能</div>
-                        </div>
                         <div class="line" @click="loginOut">
                             <div class="ico"><img src="{$pub_url}/image/power.png" class="image"></div>
                             <div class="text">注销</div>
@@ -76,7 +73,7 @@
         <div class="btm" ref="container" id='pub-btm'>
             <div class="nav">
                 <div class="left">
-                    <img src="{$res_url}/image/user.jpg" class="image">
+                    <img :src="$store.state.pos.top.ico_for_big" class="image">
                     <span class="text name">{{ $store.state.pos.top.name }}</span><span class="text">&nbsp;/&nbsp;</span><span class="text en">{{ $store.state.pos.top.en }}</span>
                 </div>
                 <div class="right">

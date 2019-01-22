@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : local
+ Source Server         : ubuntu 18.04 local
  Source Server Type    : MySQL
  Source Server Version : 80013
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 21/01/2019 14:12:20
+ Date: 22/01/2019 14:11:49
 */
 
 SET NAMES utf8mb4;
@@ -254,7 +254,7 @@ INSERT INTO `cl_bank_code` VALUES (219, '武汉农村商业银行', 'WHRCB', NUL
 INSERT INTO `cl_bank_code` VALUES (220, '东亚银行', 'BEA', NULL, NULL);
 INSERT INTO `cl_bank_code` VALUES (222, '工商银行', 'ICBC', NULL, NULL);
 INSERT INTO `cl_bank_code` VALUES (224, '邮政储蓄银行', 'PSBC', NULL, NULL);
-INSERT INTO `cl_bank_code` VALUES (227, '浦发银行', 'SPDB', '', '/uploads/2019-01-18/upload-2019-01-18 17-01-48-ab7b64b5bd082eba240cbc0a9ef4c085.jpg');
+INSERT INTO `cl_bank_code` VALUES (227, '浦发银行', 'SPDB', '', '/uploads/2019-01-21/upload-2019-01-21 15-42-46-4af550d90163ebaeeb70282eb26ff36d.jpg');
 
 -- ----------------------------
 -- Table structure for cl_bank_info
@@ -272,17 +272,19 @@ CREATE TABLE `cl_bank_info`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`uid`) USING BTREE,
   INDEX `cardindex`(`card_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 219138 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'bankBranch_Name' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 219140 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'bankBranch_Name' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_bank_info
 -- ----------------------------
 INSERT INTO `cl_bank_info` VALUES (218851, 361240832, '广发银行', 'GDB', '6258101480038191', '李俊峰', '2019-01-18 17:24:51', 0);
-INSERT INTO `cl_bank_info` VALUES (218853, 361240832, '建设银行', 'CCB', '4895920363658567', '李俊峰', '2019-01-18 17:24:53', 0);
-INSERT INTO `cl_bank_info` VALUES (219130, 361240832, '中国农业银行', 'ABC', '6259989117446855', '李俊峰', '2019-01-21 11:50:17', 1);
+INSERT INTO `cl_bank_info` VALUES (218853, 361240832, '中国建设银行', 'CCB', '4895920363658567', '李俊峰', '2019-01-21 15:52:32', 0);
 INSERT INTO `cl_bank_info` VALUES (219131, 361240796, '招商银行', 'CMB', '5187180801621354', '李俊峰', '2018-12-07 13:42:09', 0);
 INSERT INTO `cl_bank_info` VALUES (219133, 3, '招商银行', 'CMB', '6225753070872080', '陈学龙', '2018-12-10 20:48:35', 0);
 INSERT INTO `cl_bank_info` VALUES (219137, 361240796, '民生银行', 'CMBC', '6226020479411962', '李俊峰', '2018-12-25 18:52:36', 0);
+INSERT INTO `cl_bank_info` VALUES (219140, 361240832, '中国工商银行', 'ICBC', 'fasdfs', 'fasfsd', '2019-01-21 15:55:05', 0);
+INSERT INTO `cl_bank_info` VALUES (219141, 361240832, '中国农业银行', 'ABC', '423432', '423423', '2019-01-21 15:55:41', 0);
+INSERT INTO `cl_bank_info` VALUES (219142, 361240832, '中国银行', 'BOC', '423423', '423423', '2019-01-21 15:55:52', 0);
 
 -- ----------------------------
 -- Table structure for cl_coin_log
@@ -449,6 +451,12 @@ CREATE TABLE `cl_role_permission`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色权限表 by cxl' ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of cl_role_permission
+-- ----------------------------
+INSERT INTO `cl_role_permission` VALUES (8, 1, 4);
+INSERT INTO `cl_role_permission` VALUES (9, 1, 3);
+
+-- ----------------------------
 -- Table structure for cl_route
 -- ----------------------------
 DROP TABLE IF EXISTS `cl_route`;
@@ -468,17 +476,17 @@ CREATE TABLE `cl_route`  (
   `p_id` int(11) NULL DEFAULT 0 COMMENT 'cl_route.id',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '路由表 by cxl' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '路由表 by cxl' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cl_route
 -- ----------------------------
-INSERT INTO `cl_route` VALUES (1, '用户管理', 'User Manager', NULL, NULL, NULL, 'y', 'y', 'ios-paper', NULL, NULL, 0, 0, '2019-01-18 14:32:58');
+INSERT INTO `cl_route` VALUES (1, '用户管理', 'User Manager', '', '', '', 'y', 'y', 'ios-body', '/uploads/2019-01-22/upload-2019-01-22 11-15-20-8dfcabfcb284e8d419e565e56ddea903.png', '/uploads/2019-01-22/upload-2019-01-22 11-15-20-8dfcabfcb284e8d419e565e56ddea903.png', 0, 0, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (2, '用户列表', NULL, 'pay', 'User', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 1, '2019-01-18 14:32:58');
-INSERT INTO `cl_route` VALUES (3, '权限管理', 'Permission Manager', NULL, NULL, NULL, 'y', 'y', 'ios-lock', NULL, NULL, 0, 0, '2019-01-18 14:32:58');
+INSERT INTO `cl_route` VALUES (3, '权限管理', 'Permission Manager', '', '', '', 'y', 'y', 'ios-lock', '/uploads/2019-01-22/upload-2019-01-22 11-15-44-c314870554425411559d3672cb2c331f.png', '/uploads/2019-01-22/upload-2019-01-22 11-15-44-c314870554425411559d3672cb2c331f.png', 0, 0, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (4, '角色列表', NULL, 'pay', 'Role', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (5, '路由列表', NULL, 'pay', 'Route', 'listView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 3, '2019-01-18 14:32:58');
-INSERT INTO `cl_route` VALUES (6, '角色权限', NULL, 'pay', 'Role', 'permView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 4, '2019-01-18 14:32:58');
+INSERT INTO `cl_route` VALUES (6, '角色权限', '', 'pay', 'Role', 'permView', 'y', 'y', 'ios-paper', NULL, NULL, 0, 4, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (7, '编辑角色', NULL, 'pay', 'Role', 'editView', 'n', 'y', '', NULL, NULL, 0, 4, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (8, '添加角色', NULL, 'pay', 'Role', 'addView', 'n', 'y', '', NULL, NULL, 0, 4, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (9, '删除角色', NULL, 'pay', 'Role', 'del', 'n', 'y', '', NULL, NULL, 0, 4, '2019-01-18 14:32:58');
@@ -486,14 +494,35 @@ INSERT INTO `cl_route` VALUES (10, '编辑路由', NULL, 'pay', 'Route', 'editVi
 INSERT INTO `cl_route` VALUES (11, '添加路由', NULL, 'pay', 'Route', 'addView', 'n', 'y', '', NULL, NULL, 0, 5, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (12, '删除路由', NULL, 'pay', 'Route', 'del', 'n', 'y', '', NULL, NULL, 0, 5, '2019-01-18 14:32:58');
 INSERT INTO `cl_route` VALUES (13, '银行卡列表', '', 'pay', 'User', 'cardView', 'y', 'y', '', NULL, NULL, 0, 1, '2019-01-18 14:32:58');
-INSERT INTO `cl_route` VALUES (14, '银行管理', 'Bank Card Manager', '', '', '', 'y', 'y', 'ios-paper', NULL, NULL, 0, 0, '2019-01-18 14:57:07');
+INSERT INTO `cl_route` VALUES (14, '银行管理', 'Bank Card Manager', '', '', '', 'y', 'y', 'ios-paper', '/uploads/2019-01-22/upload-2019-01-22 11-15-59-759a0403f5d3c712987e40116af98d99.png', '/uploads/2019-01-22/upload-2019-01-22 11-15-58-759a0403f5d3c712987e40116af98d99.png', 0, 0, '2019-01-18 14:57:07');
 INSERT INTO `cl_route` VALUES (15, '银行列表', '', 'pay', 'Bank', 'listView', 'y', 'y', '', NULL, NULL, 0, 14, '2019-01-18 14:59:37');
 INSERT INTO `cl_route` VALUES (16, '编辑银行', '', 'pay', 'Bank', 'editView', 'n', 'y', '', NULL, NULL, 0, 15, '2019-01-18 15:47:33');
 INSERT INTO `cl_route` VALUES (17, '添加银行', '', 'pay', 'Bank', 'addView', 'n', 'y', '', NULL, NULL, 0, 15, '2019-01-18 15:47:45');
 INSERT INTO `cl_route` VALUES (18, '编辑银行卡', '', 'pay', 'User', 'editCardView', 'n', 'y', '', NULL, NULL, 0, 13, '2019-01-21 10:32:54');
 INSERT INTO `cl_route` VALUES (19, '添加银行卡', '', 'pay', 'User', 'addCardView', 'n', 'y', '', NULL, NULL, 0, 13, '2019-01-21 10:33:07');
-INSERT INTO `cl_route` VALUES (20, '银行卡管理', 'Bank Card Manager', '', '', '', 'y', 'y', 'ios-paper', NULL, NULL, 0, 0, '2019-01-21 13:45:38');
+INSERT INTO `cl_route` VALUES (20, '银行卡管理', 'Bank Card Manager', '', '', '', 'y', 'y', 'ios-card', '/uploads/2019-01-22/upload-2019-01-22 11-16-15-20e8af8101ec6f894f93381ebf4dcb99.png', '/uploads/2019-01-22/upload-2019-01-22 11-16-15-20e8af8101ec6f894f93381ebf4dcb99.png', 0, 0, '2019-01-21 13:45:38');
 INSERT INTO `cl_route` VALUES (21, '银行卡列表', '', 'pay', 'BankCard', 'listView', 'y', 'y', '', NULL, NULL, 0, 20, '2019-01-21 13:46:21');
+INSERT INTO `cl_route` VALUES (22, '编辑银行卡', '', 'pay', 'BankCard', 'editView', 'n', 'y', '', NULL, NULL, 0, 21, '2019-01-21 15:50:16');
+INSERT INTO `cl_route` VALUES (23, '添加银行卡', '', 'pay', 'BankCard', 'addView', 'n', 'y', '', NULL, NULL, 0, 21, '2019-01-21 15:50:25');
+INSERT INTO `cl_route` VALUES (24, '添加用户', '', 'pay', 'User', 'addView', 'n', 'y', '', NULL, NULL, 0, 2, '2019-01-21 16:07:05');
+INSERT INTO `cl_route` VALUES (25, '编辑用户', '', 'pay', 'User', 'editView', 'n', 'y', '', NULL, NULL, 0, 2, '2019-01-21 16:07:15');
+INSERT INTO `cl_route` VALUES (26, '编辑', '', 'pay', 'User', 'edit', 'n', 'y', '', NULL, NULL, 0, 25, '2019-01-22 11:51:37');
+INSERT INTO `cl_route` VALUES (27, '添加', '', 'pay', 'User', 'add', 'n', 'y', '', NULL, NULL, 0, 24, '2019-01-22 11:52:26');
+INSERT INTO `cl_route` VALUES (28, '删除用户', '', 'pay', 'Use', 'del', 'n', 'y', '', NULL, NULL, 0, 2, '2019-01-22 11:53:24');
+INSERT INTO `cl_route` VALUES (29, '删除银行卡', '', 'pay', 'Use', 'delCard', 'n', 'y', '', NULL, NULL, 0, 13, '2019-01-22 11:55:06');
+INSERT INTO `cl_route` VALUES (30, '编辑', '', 'pay', 'Use', 'editCard', 'n', 'y', '', NULL, NULL, 0, 18, '2019-01-22 11:56:02');
+INSERT INTO `cl_route` VALUES (31, '编辑', '', 'pay', 'Use', 'addCard', 'n', 'y', '', NULL, NULL, 0, 19, '2019-01-22 11:56:16');
+INSERT INTO `cl_route` VALUES (32, '用户授权', '', 'pay', 'Use', 'authorize', 'n', 'y', '', NULL, NULL, 0, 6, '2019-01-22 12:02:06');
+INSERT INTO `cl_route` VALUES (33, '编辑', '', 'pay', 'Role', 'edit', 'n', 'y', '', NULL, NULL, 0, 7, '2019-01-22 12:02:34');
+INSERT INTO `cl_route` VALUES (34, '添加', '', 'pay', 'Role', 'edit', 'n', 'y', '', NULL, NULL, 0, 8, '2019-01-22 12:02:53');
+INSERT INTO `cl_route` VALUES (35, '编辑', '', 'pay', 'Route', 'edit', 'n', 'y', '', NULL, NULL, 0, 10, '2019-01-22 12:03:28');
+INSERT INTO `cl_route` VALUES (36, '添加', '', 'pay', 'Route', 'add', 'n', 'y', '', NULL, NULL, 0, 11, '2019-01-22 12:03:43');
+INSERT INTO `cl_route` VALUES (37, '删除银行卡', '', 'pay', 'BankCard', 'del', 'n', 'y', '', NULL, NULL, 0, 21, '2019-01-22 12:04:25');
+INSERT INTO `cl_route` VALUES (39, '删除银行', '', 'pay', 'Bank', 'del', 'n', 'y', '', NULL, NULL, 0, 15, '2019-01-22 13:54:57');
+INSERT INTO `cl_route` VALUES (40, '编辑', '', 'pay', 'Bank', 'edit', 'n', 'y', '', NULL, NULL, 0, 16, '2019-01-22 13:56:52');
+INSERT INTO `cl_route` VALUES (41, '添加', '', 'pay', 'Bank', 'add', 'n', 'y', '', NULL, NULL, 0, 17, '2019-01-22 13:57:10');
+INSERT INTO `cl_route` VALUES (42, '编辑', '', 'pay', 'Bank', 'edit', 'n', 'y', '', NULL, NULL, 0, 22, '2019-01-22 14:02:02');
+INSERT INTO `cl_route` VALUES (43, '添加', '', 'pay', 'Bank', 'add', 'n', 'y', '', NULL, NULL, 0, 23, '2019-01-22 14:02:26');
 
 -- ----------------------------
 -- Table structure for cl_test
@@ -547,7 +576,10 @@ CREATE TABLE `cl_user`  (
 -- Records of cl_user
 -- ----------------------------
 INSERT INTO `cl_user` VALUES (361240796, '15806020008', '$2y$10$yby611QauRHclGLF1xoq7.3zPaZXu/FAlCMijEFXYIpV7eXnZHuYq', '', '中年', '李俊峰', 2, '350321198506101517', 0, '0000-00-00 00:00:00', 3, '2,3,361240796', 0, 1, NULL, '5474c1c732265', 100000, 1, 7.44, 7.44, 'a72cc9ced95adcye', NULL, 1545904848, 'n', NULL, NULL);
-INSERT INTO `cl_user` VALUES (361240832, '13375086826', '$2y$10$FRK9BEGCfNFNrCDkmKjXheXuH4RXkQYDTXo.l.4eVYSZbCY9ZBke6', '', '', '', 0, '', 0, '2019-01-18 14:37:01', 0, '', 0, 1, 0, '', 0, 1, 0.00, 0.00, '', NULL, 0, 'y', NULL, NULL);
+INSERT INTO `cl_user` VALUES (361240832, '13375086826', '$2y$10$cO8IZoeiAaQzocOe6gS.8uutVDYR6AoShTWLZiBtAGPW9cCzHX0c6', '', 'grayVTouch 123456', '陈学龙', 0, '', 0, '2019-01-18 14:37:01', 0, '', 0, 1, 0, '123456', 123456, 1, 0.00, 0.00, '', NULL, 0, 'y', '/uploads/2019-01-22/upload-2019-01-22 10-20-37-7420636d518e086ae87431ec37027bdf.jpg', 'grayVTouch');
+INSERT INTO `cl_user` VALUES (361240833, '15345093916', '$2y$10$qD4N5WN5qdi06N7nhbjA8uSkIPPPYNz8hrlSItRNBjkFO4LGGs6PC', '', 'abc', '', 0, '', 0, '2019-01-21 17:37:26', 0, '', 0, 1, 3232235627, 'mW4G4P16e57YLDqV5Iy865Te758Y87v7', 28784722, 3, 0.00, 0.00, '', NULL, 0, 'n', '/uploads/2019-01-21/upload-2019-01-21 17-37-26-4af550d90163ebaeeb70282eb26ff36d.jpg', '你好');
+INSERT INTO `cl_user` VALUES (361240834, '15394401562', '$2y$10$hhqSGP5I0POHFQJlCJtI.OmsOkXFdZrLE0367kW2HEiidHmEWQE1e', '', 'fsafasdf', '', 0, '', 0, '2019-01-21 17:38:29', 0, '', 0, 1, 3232235627, '944tKGPIwqDm03S3V4fsDQ66pHF2f50c', 77213358, 1, 0.00, 0.00, '', NULL, 0, 'n', '/uploads/2019-01-21/upload-2019-01-21 17-39-45-287396d09b6e3d1bbdd3ff2fbac80f2f.png', '陈碧玲');
+INSERT INTO `cl_user` VALUES (361240835, '17759500581', '$2y$10$cwxlUNqxPBWG8sDi.Dh6r.5HiFdzTyTKICh6gieTxnO5Xkhq9p6vi', '', '罗广', '', 0, '', 0, '2019-01-22 14:07:25', 0, '', 0, 1, 3232235627, 'olK8x3V837B7247n034NNwZR9mL62thg', 55057478, 1, 0.00, 0.00, '', NULL, 0, 'n', NULL, 'luo');
 
 -- ----------------------------
 -- Table structure for cl_user_income

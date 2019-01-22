@@ -55,6 +55,7 @@ class Login extends Controller
         if (!Hash::verify($data['password'] , $user->password)) {
             return Misc::response('002' , '用户名或密码错误');
         }
+        User::single($user);
         // 保存用户信息
         session('user' , $user);
         if ($data['remember'] == 'y') {

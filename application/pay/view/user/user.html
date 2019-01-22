@@ -11,7 +11,7 @@
 <form @submit.prevent="submit">
     <table class="input-tb">
         <tbody>
-        <tr :class="errorClass(error.username)">
+        <tr :class="errorClass(error.username)" id="username">
             <td>用户名</td>
             <td>
                 <input type="text" v-model="form.username" class="form-text" @input="error.username = ''">
@@ -20,7 +20,7 @@
                 <span class="msg">{{ error.username }}</span>
             </td>
         </tr>
-        <tr :class="errorClass(error.phone)">
+        <tr :class="errorClass(error.phone)" id="phone">
             <td>手机号</td>
             <td>
                 <input type="text" v-model="form.phone" class="form-text" @input="error.phone = ''">
@@ -29,7 +29,7 @@
                 <span class="msg">{{ error.phone }}</span>
             </td>
         </tr>
-        <tr :class="errorClass(error.password)">
+        <tr :class="errorClass(error.password)" id="password">
             <td>密码</td>
             <td>
                 <input type="text" v-model="password" class="form-text" @input="error.password = ''">
@@ -38,7 +38,7 @@
                 <span class="msg">{{ error.password }}</span>
             </td>
         </tr>
-        <tr :class="errorClass(error.nick_name)">
+        <tr :class="errorClass(error.nick_name)" id="nick_name">
             <td>昵称</td>
             <td>
                 <input type="text" v-model="form.nick_name" class="form-text" @input="error.nick_name = ''">
@@ -67,7 +67,7 @@
                 </td>
             </tr>
         </template>
-        <tr :class="errorClass(error.enable)">
+        <tr :class="errorClass(error.enable)" id="enable">
             <td>是否启用</td>
             <td>
                 <radio-group v-model="form.enable">
@@ -89,7 +89,7 @@
                 <span class="msg">{{ error.isdelete }}</span>
             </td>
         </tr>
-        <tr :class="errorClass(error.role)">
+        <tr :class="errorClass(error.role_id)" id="role_id">
             <td>角色</td>
             <td>
                 <i-select v-model="form.role_id" style="width: 300px">
@@ -97,7 +97,7 @@
                 </i-select>
                 <span class="necessary">*</span>
                 <span class="tip"></span>
-                <span class="msg">{{ error.role }}</span>
+                <span class="msg">{{ error.role_id }}</span>
             </td>
         </tr>
         <tr>

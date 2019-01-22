@@ -38,8 +38,8 @@ class Role extends Controller
     {
         $data = request()->post();
         $data['id']     = $data['id'] ?? '';
-        $data['name'] = $data['module'] ?? '';
-        $data['code'] = $data['controller'] ?? '';
+        $data['name'] = $data['name'] ?? '';
+        $data['code'] = $data['code'] ?? '';
         $data['order'] = isset($data['order']) && !empty($data['order']) ? $data['order'] : 'id|desc';
         $order = explode('|' , $data['order']);
         $where = [];

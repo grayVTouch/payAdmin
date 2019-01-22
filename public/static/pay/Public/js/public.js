@@ -37,11 +37,13 @@
                     action: ''
                 }
             } ,
+            // 当前登录用户信息
+            user: {}
         }
     });
 
-    // 查询字符串解析
     (function(){
+        // 查询字符串解析
         store.state.route.url = window.location.href;
         store.state.route.host = window.location.host;
         store.state.route.port = window.location.port;
@@ -49,14 +51,12 @@
         store.state.route.search = window.location.search;
         store.state.route.hash = window.location.hash;
         store.state.route.query = G.queryString();
-
         let mvc = store.state.route.path.substr(1).split('/');
         store.state.route.mvc = {
             module: mvc[0] ,
             controller: mvc[1] ,
             action: mvc[2]
         };
-
     })();
 
     // 全局混入对象

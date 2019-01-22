@@ -18,24 +18,10 @@
                 {
                     name: 'id' ,
                     order: {
-                        'id|asc': '升序' ,
-                        'id|desc': '降序' ,
+                        'uid|asc': '升序' ,
+                        'uid|desc': '降序' ,
                     }
                 } ,
-                {
-                    name: '权重' ,
-                    order: {
-                        'weight|asc': '升序' ,
-                        'weight|desc': '降序' ,
-                    }
-                } ,
-                {
-                    name: '创建时间' ,
-                    order: {
-                        'create_time|asc': '升序' ,
-                        'create_time|desc': '降序' ,
-                    }
-                }
             ] ,
         } ,
         mixins: [

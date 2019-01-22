@@ -75,7 +75,9 @@ class Controller extends BaseController
             // 当前方法视图 url
             'act_url'   => $act_url ,
             // 当前登录用户信息
-            'user'      => Misc::user()
+            'user'      => Misc::user() ,
+            // 公司 logo
+            'logo'      => config('app.logo')
         ]);
     }
 

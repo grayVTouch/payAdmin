@@ -9,7 +9,9 @@
 namespace app\pay\controller;
 
 use app\common\util\Hash;
+use Db;
 use Validate;
+use Exception;
 
 use app\pay\model\User as MUser;
 use app\pay\model\BankInfo;
@@ -160,11 +162,29 @@ class User extends Controller
         if (empty($id_list)) {
             return Misc::response('002' , '请提供待删除项');
         }
-        $res = MRoute::whereIn('id' , $id_list)->delete();
-        return Misc::response('000' , '操作成功' , $res);
+        try {
+            Db::startTrans();
+
+            // 检查是否包含超级管理员
+            $count = MUser::whereIn('uid' , $id_list)
+                ->where('is_root' , '=' , 'y')
+                ->lock('for share')
+                ->count();
+            if ($count > 0) {
+                // 开启了锁，则必须提交
+                Db::commit();
+                return Misc::response('002' , '待删除用户中包含超级管理员！！禁止操作');
+            }
+            $res = MUser::whereIn('uid' , $id_list)
+                ->where('is_root' , '!=' , 'y')
+                ->delete();
+            Db::commit();
+            return Misc::response('000' , '操作成功' , $res);
+        } catch(Exception $e) {
+            Db::rollBack();
+            throw $e;
+        }
     }
-
-
 
     // 数据：列表
     public function list()
@@ -324,5 +344,11 @@ class User extends Controller
         }
         $res = BankInfo::whereIn('id' , $id_list)->delete();
         return Misc::response('000' , '操作成功' , $res);
+    }
+
+    // 获取登录用户数据
+    public function user()
+    {
+        return Misc::response('000' , '' , Misc::user());
     }
 }

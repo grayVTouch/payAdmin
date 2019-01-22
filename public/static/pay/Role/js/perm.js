@@ -135,6 +135,7 @@
             // 选中复选框
             selectCheckboxForTree (nodes , cur) {
                 this.checkboxEvent(cur.id , cur.checked);
+                // console.log(nodes);
             } ,
 
             // 复选框状态变化事件

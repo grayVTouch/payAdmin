@@ -25,4 +25,6 @@ return [
     'image_dir' => __DIR__ . '/../../public/uploads' ,
     // 默认头像
     'avatar' => '/static/image/avatar.jpg' ,
+    // 公司 logo
+    'logo' => '/static/image/lovely.jpg' ,
 ];
