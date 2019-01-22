@@ -187,7 +187,7 @@ topContext.mixin = {
         get: {
             methods: {
                 // 获取数据
-                initData () {
+                initData (callback) {
                     let self = this;
                     this.$load.show();
                     this.idList = [];
@@ -203,6 +203,9 @@ topContext.mixin = {
                             data = data.data;
                             self.data = data.data;
                             // self.form = data.filter;
+                            if (G.isFunction(callback)) {
+                                callback();
+                            }
                         }
                     });
                 } ,
@@ -253,7 +256,7 @@ topContext.mixin = {
         get: {
             methods: {
                 // 获取数据
-                initData () {
+                initData (callback) {
                     if (this.type != 'edit') {
                         return ;
                     }
@@ -266,6 +269,9 @@ topContext.mixin = {
                                 return ;
                             }
                             self.form = data.data;
+                            if (G.isFunction(callback)) {
+                                callback();
+                            }
                         }
                     });
                 } ,

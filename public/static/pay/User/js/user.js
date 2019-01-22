@@ -65,7 +65,9 @@
             // 获取数据的链接
             this.dataUrl = genUrl(this.$store.state.route.mvc.controller , 'get' , {uid: this.form.uid});
             this.saveUrl = genUrl(this.$store.state.route.mvc.controller , this.type);
-            this.initData();
+            this.initData(() => {
+                this.form.password = '';
+            });
         } ,
 
         methods: {

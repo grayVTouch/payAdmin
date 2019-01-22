@@ -45,7 +45,7 @@ class PermAuth
         $user = Misc::user();
         if ($user->is_root == 'y') {
             // 超级管理员，跳过权限认证
-            return true;
+            return ;
         }
         // 检查路由表是否存在该路由，如果不存在，默认为已授权
         $mvc = Misc::mvc();

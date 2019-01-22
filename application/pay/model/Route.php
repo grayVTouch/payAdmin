@@ -13,6 +13,7 @@ use Exception;
 
 use think\Model as BaseModel;
 use think\Model\Collection;
+use Db;
 
 class Route extends BaseModel implements Model
 {
@@ -37,7 +38,9 @@ class Route extends BaseModel implements Model
                     ['ro.enable' , '=' , 'y'] ,
                     ['ro.is_menu' , '=' , 'y'] ,
                     ['rl.id' , '=' , $role_id]
-                ])->order('ro.weight' , 'desc')
+                ])
+                ->order('ro.weight' , 'desc')
+                ->order('ro.id' , 'desc')
                 ->field('ro.*')
                 ->select()
                 ->toArray();

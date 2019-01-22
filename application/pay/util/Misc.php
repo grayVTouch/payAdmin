@@ -18,12 +18,8 @@ class Misc
     // 获取菜单
     public static function menu()
     {
-//        $menu = session('menu');
-//        if (is_null($menu)) {
-            $user = self::user();
-            $menu = $user->is_root == 'y' ? Route::menus() : Route::menu($user->role_id);
-//            session('menu' , $menu);
-//        }
+        $user = self::user();
+        $menu = $user->is_root == 'y' ? Route::menus() : Route::menu($user->role_id);
         return $menu;
     }
 

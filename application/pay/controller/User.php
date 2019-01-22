@@ -73,6 +73,13 @@ class User extends Controller
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
         }
+        // 检查手机号码是否重复
+        $is_repeat = (bool) MUser::where('phone' , $data['phone'])->count();
+        if ($is_repeat) {
+            return Misc::response('001' , '' , [
+                'phone' => '该手机号码已经存在，请更换其他手机号码'
+            ]);
+        }
         // 商户号
         $data['mno'] = random(8 , 'number' , true);
         // 密钥
@@ -115,6 +122,16 @@ class User extends Controller
         ]);
         if (!$validator->batch()->check($data)) {
             return Misc::response('001' , '' , $validator->getError());
+        }
+        // 检查手机号码是否重复
+        $is_repeat = (bool) MUser::where([
+            ['uid' , '<>' , $data['uid']] ,
+            ['phone' , '=' , $data['phone']]
+        ])->count();
+        if ($is_repeat) {
+            return Misc::response('001' , '' , [
+                'phone' => '该手机号码已经存在，请更换其他手机号码'
+            ]);
         }
         $m = MUser::where('uid' , $data['uid'])->find();
         // 关于密码，如果提供了密码，重新生成；否则，使用原始密码
@@ -168,7 +185,7 @@ class User extends Controller
             // 检查是否包含超级管理员
             $count = MUser::whereIn('uid' , $id_list)
                 ->where('is_root' , '=' , 'y')
-                ->lock('for share')
+                ->lock('lock in share mode')
                 ->count();
             if ($count > 0) {
                 // 开启了锁，则必须提交
@@ -176,7 +193,7 @@ class User extends Controller
                 return Misc::response('002' , '待删除用户中包含超级管理员！！禁止操作');
             }
             $res = MUser::whereIn('uid' , $id_list)
-                ->where('is_root' , '!=' , 'y')
+                ->where('is_root' , '<>' , 'y')
                 ->delete();
             Db::commit();
             return Misc::response('000' , '操作成功' , $res);
